@@ -8,3 +8,4 @@ target
 *.vs_code
 *.secret
 Cargo.lock
+*run_publish.sh
