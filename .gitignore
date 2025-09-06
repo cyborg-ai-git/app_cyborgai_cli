@@ -1,0 +1,10 @@
+target
+*/config.toml
+*.assets*
+*.so
+*.onnx
+*.ort
+*.idea
+*.vs_code
+*.secret
+Cargo.lock
