@@ -1,14 +1,14 @@
-### CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International          
 
-### https://github.com/cyborg-ai-git                                                      
+
+## [CyborgAI](https://github.com/cyborg-ai-git) (https://github.com/cyborg-ai-git)
+
+<img src="https://avatars.githubusercontent.com/u/129898917?v=4" alt="cyborgai" width="256" height="256">
 
 # EVO CyborgAI CLI
 
 > ⚠️ **BETA DISCLAIMER**: CyborgAI CLI is currently in beta version. Use at your own risk. Features may be unstable and subject to change without notice. This software is provided "as is" without warranty of any kind.
 
-## [CyborgAI](https://cyborgai.fly.dev) 
-
-<img src="https://avatars.githubusercontent.com/u/129898917?v=4" alt="cyborgai" width="256" height="256">
+#### CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International          
 
 ## What This App Does
 
@@ -22,6 +22,19 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 - **Built-in Help System** with comprehensive keyboard shortcuts
 - **Git and Github Integration** for repository management
 - **File Explorer** for project navigation
+
+## 📊 Development Progress
+
+| Feature | Progress | Status |
+|---------|----------|--------|
+| **Chat**: AI conversation interface | ![60%](https://progress-bar.dev/60?color=ff6b35) | 60% |
+| **Agent Edit Tab** | ![58%](https://progress-bar.dev/58?color=ff7043) | 58% |
+| **Memory RAG Agent** | ![42%](https://progress-bar.dev/42?color=ff8a65) | 42% |
+| **Peer API** | ![82%](https://progress-bar.dev/82?color=66bb6a) | 82% |
+| **File**: File explorer for project navigation | ![74%](https://progress-bar.dev/74?color=81c784) | 74% |
+| **Git**: Git repository operations | ![73%](https://progress-bar.dev/73?color=81c784) | 73% |
+| **Settings**: Application configuration | ![58%](https://progress-bar.dev/58?color=ff7043) | 58% |
+| **Help**: Keyboard shortcuts and usage guide | ![63%](https://progress-bar.dev/63?color=ffb74d) | 63% |
 
 ## 🎥 Demo Video
 
@@ -136,7 +149,7 @@ The `scripts/` folder contains automation scripts for development workflow:
 ### Issue Management (GitHub Integration)
 - **`run_issue_create.sh`**: 
   - Creates GitHub issues and corresponding Git Flow feature branches
-  - Usage: `./run_issue_create.sh "issue title" "optional description"`
+  - Usage: `./run_issue_create.sh "issue title" "description"`
   - Automatically generates sanitized branch names like `feature/issue_123_fix_bug`
 
 - **`run_issue_start.sh`**: 
@@ -183,7 +196,6 @@ This repository uses **Git Flow** branching strategy for organized development:
 - **`develop`**: Integration branch where features are merged for testing
 - **`feature/*`**: Feature development branches (e.g., `feature/issue_123_new_feature`)
 - **`release/*`**: Release preparation branches (e.g., `release/v1.2.0`)
-- **`hotfix/*`**: Critical bug fixes for production (e.g., `hotfix/v1.2.1`)
 
 ### Workflow Commands
 ```bash
