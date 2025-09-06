@@ -15,6 +15,7 @@ echo "🟢 $CURRENT_TIME - RUN benches rust $PACKAGE_NAME $DIRECTORY_BASE"
 CURRENT_DIRECTORY=$(pwd)
 #===================================================================================================
 cd "$DIRECTORY_BASE" || exit
+cd ..
 export RUST_LOG=error
 cargo bench
 #===================================================================================================
