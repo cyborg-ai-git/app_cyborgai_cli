@@ -25,16 +25,16 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 
 ## 📊 Development Progress
 
-| Feature | Progress | Status |
-|---------|----------|--------|
-| **Chat**: AI conversation interface | ![60%](https://progress-bar.dev/60?color=ff6b35) | 60% |
-| **Agent Edit Tab** | ![58%](https://progress-bar.dev/58?color=ff7043) | 58% |
-| **Memory RAG Agent** | ![42%](https://progress-bar.dev/42?color=ff8a65) | 42% |
-| **Peer API** | ![82%](https://progress-bar.dev/82?color=66bb6a) | 82% |
-| **File**: File explorer for project navigation | ![74%](https://progress-bar.dev/74?color=81c784) | 74% |
-| **Git**: Git repository operations | ![73%](https://progress-bar.dev/73?color=81c784) | 73% |
-| **Settings**: Application configuration | ![58%](https://progress-bar.dev/58?color=ff7043) | 58% |
-| **Help**: Keyboard shortcuts and usage guide | ![63%](https://progress-bar.dev/63?color=ffb74d) | 63% |
+| Feature                                        | Status   |
+|------------------------------------------------|----------|
+| **Chat**: AI conversation interface            | 60%      |
+| **Agent Edit Tab**                             | 58%      |
+| **Memory RAG Agent**                           | 42%      |
+| **Peer API**                                   | 82%      |
+| **File**: File explorer for project navigation | 74%      |
+| **Git**: Git repository operations             | 73%      |
+| **Settings**: Application configuration        | 58%      |
+| **Help**: Keyboard shortcuts and usage guide   | 63%      |
 
 ## 🎥 Demo Video
 
