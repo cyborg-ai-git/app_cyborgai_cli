@@ -31,8 +31,21 @@ fi
 
 # Check if git flow is initialized
 if ! git config --get gitflow.branch.master >/dev/null 2>&1; then
-    echo "❌ Git flow not initialized. Please run git flow init first."
-    exit 1
+    echo "❌ Git flow not initialized. Initializing now..."
+
+    # Check if develop branch exists
+    if git show-ref --verify --quiet refs/heads/develop; then
+        echo "🔵 Develop branch found"
+    else
+        echo "🔵 Creating develop branch..."
+        git checkout -b develop 2>/dev/null || git checkout develop
+        git push -u origin develop 2>/dev/null || true
+    fi
+
+    # Initialize git flow with defaults (no hotfix branch)
+    echo -e "master\ndevelop\nfeature/\nrelease/\n\nsupport/\nv" | git flow init
+
+    echo "🟢 Git flow initialized successfully!"
 fi
 
 # Set commit message
