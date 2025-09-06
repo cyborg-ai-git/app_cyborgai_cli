@@ -1,1 +1,1 @@
-searchState.loadedDescShard("cyborgai_cli", 0, "Doc")
+searchState.loadedDescShard("cyborgai_cli", 0, "Evo framework: v2025961550 (evo_framework)\nVersion of the app\nmain function")
