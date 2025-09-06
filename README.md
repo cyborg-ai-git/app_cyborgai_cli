@@ -50,39 +50,28 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 Rust is required to build and run the application. See detailed installation instructions:
 📖 **[Install Rust Guide](install_rust.md)**
 
-### 2. Clone and Build
 
-```bash
-git clone https://github.com/cyborg-ai-git/evo_framework-rust.git
-cd evo_framework-rust
-cd rust/evo_cyborgai_cli
-chmod +x build.sh
-./build.sh
-```
 
 ## How to Run
 
 ### Development Mode
 ```bash
 # Quick development run
-cd rust/evo_cyborgai_cli
 cargo run
 
 # Or using the development script
-cd rust/evo_cyborgai_cli/test_doc
-chmod +x run.sh
-./run.sh
+chmod +x scripts/run_dev.sh
+./scripts/run_dev.sh
 ```
 
 ### Production Mode
 ```bash
-# Build and run release version
-cd rust/evo_cyborgai_cli
-./build.sh
-./target/release/evo_cyborgai_cli
-
-# Or directly with cargo
+# Run in release mode for optimal performance
 cargo run --release
+
+# Or using the release script
+chmod +x scripts/run.sh
+./scripts/run.sh
 ```
 
 ## Project Structure
@@ -98,6 +87,8 @@ app_cyborgai_cli/
 │   │   └── test_app_cyborgai_cli.rs
 │   └── Cargo.toml               # Package configuration
 ├── scripts/                      # Development and automation scripts
+│   ├── run.sh                   # Run application in release mode
+│   ├── run_dev.sh               # Run application in development mode
 │   ├── run_benches.sh           # Run performance benchmarks
 │   ├── run_cargo_clean.sh       # Clean build artifacts
 │   ├── run_cargo_update.sh      # Update dependencies
@@ -126,6 +117,8 @@ app_cyborgai_cli/
 The `scripts/` folder contains automation scripts for development workflow:
 
 ### Build & Development Scripts
+- **`run.sh`**: Runs the application in release mode using `cargo run --release` for optimal performance
+- **`run_dev.sh`**: Runs the application in development mode using `cargo run` for faster compilation
 - **`run_cargo_clean.sh`**: Cleans all build artifacts and target directories using `cargo clean`
 - **`run_cargo_update.sh`**: Updates all Cargo dependencies to their latest compatible versions
 - **`run_format_code.sh`**: Formats code with `cargo fmt` and runs linting with `cargo clippy`
@@ -197,6 +190,8 @@ This repository uses **Git Flow** branching strategy for organized development:
 - **`feature/*`**: Feature development branches (e.g., `feature/issue_123_new_feature`)
 - **`release/*`**: Release preparation branches (e.g., `release/v1.2.0`)
 
+**Note on Hotfix Branches**: We do not use `hotfix/*` branches in our CyborgAI standard workflow. All code must be fully tested and verified before deployment. We believe that good code takes time, and proper testing through the standard feature → develop → release → master flow ensures quality and stability.
+
 ### Workflow Commands
 ```bash
 # Start new feature
@@ -217,19 +212,12 @@ This repository uses **Git Flow** branching strategy for organized development:
 
 ## Additional Requirements
 
-### For GitHub Operations
-**GitHub CLI (gh)** is required for repository and issue management scripts:
-📖 **[Install GitHub CLI Guide](install_gh.md)**
-
-### For Git Flow Workflow
-**Git Flow** is used for organized development workflow:
-📖 **[Install Git Flow Guide](install_git_flow.md)**
-
-### For Documentation Generation
-**PlantUML** and **Pandoc** are required for `run_documentation.sh`:
-
-📖 **[Install PlantUML Guide](install_plantuml.md)** - For diagram generation  
-📖 **[Install Pandoc Guide](install_pandoc.md)** - For document export to PDF, DOC, ODT formats
+| Tool | Description | Documentation |
+|------|-------------|---------------|
+| **GitHub CLI (gh)** | Required for repository and issue management scripts | 📖 **[Install GitHub CLI Guide](install_gh.md)** |
+| **Git Flow** | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
+| **PlantUML** | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
+| **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](install_pandoc.md)** |
 
 **Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
 
@@ -240,27 +228,81 @@ We are actively working on **CyborgAI Dev** - a comprehensive Rust application t
 🚀 **Stay tuned for updates**: [CyborgAI Dev Repository](https://github.com/cyborg-ai-git/app_cyborgai_dev)
 
 The new application will include:
-- Integrated documentation generation
-- Built-in diagram creation
-- Native document export capabilities
-- Enhanced project management
-- Streamlined development workflows
+
+### 🤖 AI-Powered Automation
+- **Automatic Documentation Generation**: Full detailed documentation created automatically with AI support and UML diagrams
+- **Automatic Test Generation**: Comprehensive test suites generated automatically based on code analysis
+- **Automatic Benchmark Generation**: Performance benchmarks created automatically for optimization insights
+- **AI-Supported API Generation**: API generated automatically with AI assistance
+- **AI-Supported Entity Generation**: Entities created automatically
+
+### 🛠️ Enhanced Development Tools
+- **Integrated Documentation Generation**: Built-in tools for creating and maintaining project documentation
+- **Built-in Diagram Creation**: Native UML and architectural diagram generation without external dependencies
+- **Native Document Export**: Export capabilities to PDF, DOC, ODT formats without requiring Pandoc
+- **Enhanced Project Management**: Advanced project scaffolding, dependency management, and workflow automation
+- **Streamlined Development Workflows**: Optimized Git Flow integration with intelligent branch management and automated CI/CD pipelines
+
 
 ## How to Contribute
 
-1. **Fork the Repository**: Create your own fork of the project
-2. **Create Feature Branch**: `git checkout -b feature/your-feature-name`
-3. **Follow EVO Framework**: Adhere to naming conventions and architecture patterns
-4. **Write Tests**: Include appropriate test coverage
-5. **Submit Pull Request**: Target the `develop` branch
-6. **Code Review**: Participate in the review process
+### 🚀 Quick Start for Contributors
 
-### Contribution Guidelines
+1. **Fork the Repository**: Create your own fork of the project
+2. **Create an Issue**: Use our automated script to create issues and Git Flow feature branches:
+   ```bash
+   ./scripts/run_issue_create.sh "Your feature or bug description" "Detailed description"
+   ```
+3. **Start Feature Branch**: Use Git Flow to start working on the issue:
+   ```bash
+   git flow feature start your-feature-name
+   # or use our automation script
+   ./scripts/run_issue_start.sh 123
+   ```
+4. **Follow EVO Framework**: Adhere to naming conventions and architecture patterns
+5. **Write Tests**: Include appropriate test coverage
+6. **Submit Pull Request**: Use Git Flow to finish and target the `develop` branch:
+   ```bash
+   git flow feature finish your-feature-name
+   # or use our automation script
+   ./scripts/run_issue_finish.sh 123
+   ```
+7. **Code Review**: Participate in the review process
+
+### 📋 GitHub Templates & Community Standards
+
+This repository includes comprehensive GitHub templates and community standards located in the `.github/` directory:
+
+- **`.github/CODE_OF_CONDUCT.md`**: Community guidelines and expected behavior
+- **`.github/ISSUE_TEMPLATE/`**: Standardized issue templates for bugs, features, and documentation
+- **`.github/PULL_REQUEST_TEMPLATE.md`**: Pull request template with checklist
+- **`.github/CONTRIBUTING.md`**: Detailed contribution guidelines
+- **`.github/SECURITY.md`**: Security policy and vulnerability reporting
+
+### 🛠️ Automated Contribution Workflow
+
+Use our automated scripts for streamlined contributions:
+
+```bash
+# Create a new issue and feature branch
+./scripts/run_issue_create.sh "Feature: Add new functionality" "Detailed description of the feature"
+
+# Start working on an existing issue
+./scripts/run_issue_start.sh 123
+
+# Finish your work and create a pull request
+./scripts/run_issue_finish.sh 123
+```
+
+### 📝 Contribution Guidelines
+
 - Follow the EVO Framework naming conventions (C*, E*, G*, U* prefixes)
 - Maintain strict separation between control and GUI layers
 - Document all public APIs
 - Include unit tests for new functionality
 - Ensure cross-platform compatibility
+- Use the provided GitHub templates when creating issues and pull requests
+- Follow the Code of Conduct outlined in `.github/CODE_OF_CONDUCT.md`
 
 ## Documentation
 EVO Framework Documentation: [Coming Soon]
