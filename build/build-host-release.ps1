@@ -17,7 +17,7 @@ New-Item -ItemType Directory -Force -Path "release" | Out-Null
 # Build command - use zigbuild for cross-compilation
 $BuildCmd = "cargo zigbuild --release --target x86_64-pc-windows-msvc"
 
-if ($Features -ne "" -and $Features -ne "full") {
+if ($Features -ne "" -and $Features -ne "full" -and $Features -ne "default") {
     $BuildCmd += " --features $Features"
 }
 

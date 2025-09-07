@@ -55,7 +55,7 @@ mkdir -p release
 # Build command - use zigbuild for cross-compilation
 BUILD_CMD="cargo zigbuild --release --target $TARGET"
 
-if [ "$FEATURES" != "" ]; then
+if [ "$FEATURES" != "" ] && [ "$FEATURES" != "full" ] && [ "$FEATURES" != "default" ]; then
     # Remove the -f prefix if present
     CLEAN_FEATURES=$(echo "$FEATURES" | sed 's/^-f //')
     BUILD_CMD="$BUILD_CMD --features $CLEAN_FEATURES"
