@@ -139,9 +139,22 @@ if ! git diff-index --quiet HEAD --; then
     echo "✅ Changes committed"
 fi
 
-# Push current branch to make sure it's up to date
-echo "📤 Pushing current branch to remote..."
-git push origin "$CURRENT_BRANCH"
+# Prepare for pull request by rebasing on latest develop
+echo "� Prehparing branch for pull request..."
+
+# Switch to develop and pull latest
+echo "📥 Updating develop branch..."
+git checkout develop
+git pull origin develop
+
+# Switch back to feature branch and rebase on develop
+echo "🔄 Rebasing feature branch on develop..."
+git switch "$CURRENT_BRANCH"
+git rebase develop
+
+# Push the rebased feature branch
+echo "📤 Pushing rebased feature branch..."
+git push origin "$CURRENT_BRANCH" --force-with-lease
 #---------------------------------------------------------------------------------------------------
 # Create pull request
 echo "🔀 Creating pull request..."
@@ -189,11 +202,11 @@ echo "✅ Pull request created successfully!"
 echo "🔗 PR URL: $PR_OUTPUT"
 
 if [ -n "$PR_NUMBER" ]; then
-    echo "📋 PR #$PR_NUMBER: Fix #$ISSUE_NUMBER: $ISSUE_TITLE"
+    echo "� PoR #$PR_NUMBER: Fix #$ISSUE_NUMBER: $ISSUE_TITLE"
 fi
 #---------------------------------------------------------------------------------------------------
 # Close the issue (it will be automatically closed when PR is merged if using "Closes #NUMBER" in PR description)
-echo "🔒 Closing issue #$ISSUE_NUMBER..."
+echo "� Crlosing issue #$ISSUE_NUMBER..."
 
 CLOSE_OUTPUT=$(gh issue close "$ISSUE_NUMBER" --comment "Resolved by PR $PR_OUTPUT" 2>&1)
 CLOSE_EXIT_CODE=$?
@@ -204,31 +217,10 @@ else
     echo "⚠️  Could not close issue automatically: $CLOSE_OUTPUT"
     echo "💡 You can close it manually: gh issue close $ISSUE_NUMBER"
 fi
-#---------------------------------------------------------------------------------------------------
-# Prepare for pull request by rebasing on latest develop
-echo "🔄 Preparing branch for pull request..."
 
-# Switch to develop and pull latest
-echo "📥 Updating develop branch..."
-git checkout develop
-git pull origin develop
-
-git switch "$CURRENT_BRANCH"
-
-# Switch back to feature branch and rebase on develop
-#echo "🔄 Rebasing feature branch on develop..."
-#git switch "$CURRENT_BRANCH"
-#git rebase develop
-
-# Push the rebased feature branch
-#echo "📤 Pushing rebased feature branch..."
-#git push origin "$CURRENT_BRANCH" --force-with-lease
-
-git flow feature finish "$CURRENT_BRANCH"
-
+# Show the created PR
+echo "📋 Viewing created pull request..."
 gh pr view "$PR_NUMBER"
-bash "./run_issue_list.sh"
-
 #---------------------------------------------------------------------------------------------------
 echo ""
 echo "🎉 SUCCESS! Issue workflow completed:"
@@ -243,7 +235,7 @@ echo ""
 echo "💡 Next steps:"
 echo "   1. Wait for PR approval and merge"
 echo "   2. After PR is merged, the remote feature branch will be deleted"
-echo "   3. You can then switch to develop and pul
+echo "   3. You can then switch to develop and pul"
 #---------------------------------------------------------------------------------------------------
 cd "$CURRENT_DIRECTORY" || exit
 #===================================================================================================
