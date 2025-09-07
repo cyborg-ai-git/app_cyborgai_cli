@@ -46,7 +46,21 @@ if [ "$FEATURES" != "" ] && [ "$FEATURES" != "full" ]; then
 fi
 
 echo "Executing: $BUILD_CMD"
-cd ../app_cyborgai_cli
+
+# Determine if we're in the build directory or root directory
+if [ -d "app_cyborgai_cli" ]; then
+    # We're in the root directory
+    cd app_cyborgai_cli
+    BUILD_DIR="../build"
+elif [ -d "../app_cyborgai_cli" ]; then
+    # We're in the build directory
+    cd ../app_cyborgai_cli
+    BUILD_DIR="../build"
+else
+    echo "Error: Cannot find app_cyborgai_cli directory"
+    exit 1
+fi
+
 eval $BUILD_CMD
 
 # Find the built binary
@@ -68,6 +82,7 @@ if [[ "$TARGET" == *"-windows-"* ]]; then
     RELEASE_NAME="$RELEASE_NAME.exe"
 fi
 
-cp "$BINARY_PATH" "../build/release/$RELEASE_NAME"
+mkdir -p "$BUILD_DIR/release"
+cp "$BINARY_PATH" "$BUILD_DIR/release/$RELEASE_NAME"
 
 echo "Build completed: release/$RELEASE_NAME"

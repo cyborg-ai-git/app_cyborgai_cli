@@ -52,8 +52,8 @@ echo "Nightly: $NIGHTLY"
 # Create release directory
 mkdir -p release
 
-# Build command
-BUILD_CMD="cross build --release --target $TARGET"
+# Build command - use zigbuild for cross-compilation
+BUILD_CMD="cargo zigbuild --release --target $TARGET"
 
 if [ "$FEATURES" != "" ]; then
     # Remove the -f prefix if present
@@ -66,7 +66,21 @@ if [ "$CARGO_FLAGS" != "" ]; then
 fi
 
 echo "Executing: $BUILD_CMD"
-cd ../app_cyborgai_cli
+
+# Determine if we're in the build directory or root directory
+if [ -d "app_cyborgai_cli" ]; then
+    # We're in the root directory
+    cd app_cyborgai_cli
+    BUILD_DIR="../build"
+elif [ -d "../app_cyborgai_cli" ]; then
+    # We're in the build directory
+    cd ../app_cyborgai_cli
+    BUILD_DIR="../build"
+else
+    echo "Error: Cannot find app_cyborgai_cli directory"
+    exit 1
+fi
+
 eval $BUILD_CMD
 
 # Find the built binary
@@ -88,12 +102,13 @@ if [[ "$TARGET" == *"-windows-"* ]]; then
     RELEASE_NAME="$RELEASE_NAME.exe"
 fi
 
-cp "$BINARY_PATH" "../build/release/$RELEASE_NAME"
+mkdir -p "$BUILD_DIR/release"
+cp "$BINARY_PATH" "$BUILD_DIR/release/$RELEASE_NAME"
 
 # Compress if requested
 if [ "$COMPRESS" = "true" ]; then
     echo "Compressing binary with UPX..."
-    upx --best "../build/release/$RELEASE_NAME" || echo "UPX compression failed, continuing..."
+    upx --best "$BUILD_DIR/release/$RELEASE_NAME" || echo "UPX compression failed, continuing..."
 fi
 
 echo "Build completed: release/$RELEASE_NAME"

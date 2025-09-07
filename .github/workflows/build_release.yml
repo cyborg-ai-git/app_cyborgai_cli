@@ -95,7 +95,7 @@ jobs:
               exit 0
             fi
           fi
-  build-release-cross:
+  build-release-linux:
     needs: detect-release
     if: needs.detect-release.outputs.should_release == 'true'
     runs-on: ubuntu-latest
@@ -137,8 +137,8 @@ jobs:
           rustup default nightly-2025-06-20
           rustup override set nightly-2025-06-20
 
-      - name: Install cross
-        run: cargo install cross --git https://github.com/cross-rs/cross
+      - name: Install zigbuild
+        run: cargo install cargo-zigbuild
 
       - name: Build ${{ matrix.platform.target }}
         timeout-minutes: 120
@@ -270,6 +270,9 @@ jobs:
           rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
           rustup default nightly-2025-06-20
           rustup override set nightly-2025-06-20
+
+      - name: Install zigbuild
+        run: cargo install cargo-zigbuild
 
       - name: Build release
         run: |
