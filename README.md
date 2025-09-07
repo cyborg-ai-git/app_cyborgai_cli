@@ -25,16 +25,16 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 
 ## 📊 Development Progress
 
-| Feature                                        | Status   |
-|------------------------------------------------|----------|
-| **Chat**: AI conversation interface            | 60%      |
-| **Agent Edit Tab**                             | 58%      |
-| **Memory RAG Agent**                           | 42%      |
-| **Peer API**                                   | 82%      |
-| **File**: File explorer for project navigation | 74%      |
-| **Git**: Git repository operations             | 73%      |
-| **Settings**: Application configuration        | 58%      |
-| **Help**: Keyboard shortcuts and usage guide   | 63%      |
+| Feature                                            | Progress |
+|----------------------------------------------------|----------|
+| **Chat Tab**: AI conversation interface            | 60%      |
+| **Agent Edit Tab**                                 | 58%      |
+| **Memory Tab**                                     | 42%      |
+| **Peer Tab**                                       | 82%      |
+| **File Tab**: File explorer for project navigation | 74%      |
+| **Git Tab**: Git repository operations             | 73%      |
+| **Settings Tab**: Application configuration        | 58%      |
+| **Help**: Keyboard shortcuts and usage guide       | 63%      |
 
 ## 🎥 Demo Video
 
@@ -197,17 +197,15 @@ This repository uses **Git Flow** branching strategy for organized development:
 # Start new feature
 ./scripts/run_issue_create.sh "Feature description"
 
-# Work on existing issue
+# Work on existing issue  => example: https://github.com/cyborg-ai-git/app_cyborgai_cli/issues/123 
 ./scripts/run_issue_start.sh 123
 
 # Regular commits
 ./scripts/run_git_push.sh "commit message"
 
-# Create release
-./scripts/run_git_push.sh "release message" release
-
 # Finish feature work
 ./scripts/run_issue_finish.sh 123
+
 ```
 
 ## Additional Requirements
@@ -296,19 +294,19 @@ Use our automated scripts for streamlined contributions:
 
 ### 📝 Contribution Guidelines
 
-- Follow the EVO Framework naming conventions (C*, E*, G*, U* prefixes)
-- Maintain strict separation between control and GUI layers
-- Document all public APIs
+- Follow the **[EVO Framework standard conventions](https://github.com/cyborg-ai-git/doc_evo.git)**
+- Maintain strict separation between Control and Gui layers
+- Document all
 - Include unit tests for new functionality
 - Ensure cross-platform compatibility
 - Use the provided GitHub templates when creating issues and pull requests
 - Follow the Code of Conduct outlined in `.github/CODE_OF_CONDUCT.md`
 
 ## Documentation
-EVO Framework Documentation: [Coming Soon]
+**[EVO Framework Documentation](https://github.com/cyborg-ai-git/doc_evo.git)**
 
 ## License
-CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
+**[CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](LICENSE.txt)**
 
 ## Links
 - [YouTube Demo](https://www.youtube.com/watch?v=OnZAlOs09p4)
