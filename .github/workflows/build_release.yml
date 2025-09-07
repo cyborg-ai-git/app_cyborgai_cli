@@ -137,6 +137,13 @@ jobs:
           rustup default nightly-2025-06-20
           rustup override set nightly-2025-06-20
 
+      - name: Install Zig
+        run: |
+          wget -q https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz
+          tar -xf zig-linux-x86_64-0.13.0.tar.xz
+          sudo mv zig-linux-x86_64-0.13.0 /opt/zig
+          echo "/opt/zig" >> $GITHUB_PATH
+
       - name: Install zigbuild
         run: cargo install cargo-zigbuild
 
@@ -232,60 +239,62 @@ jobs:
           fail_on_unmatched_files: true
           generate_release_notes: true
 
-  build-release-windows:
-    needs: detect-release
-    if: needs.detect-release.outputs.should_release == 'true'
-    runs-on: windows-latest
-    env:
-      RUSTFLAGS: "-C target-feature=+crt-static"
-      RUST_BACKTRACE: full
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ilammy/setup-nasm@v1
-
-      - name: Configure Git for private repositories
-        run: |
-          # Configure Git authentication
-          git config --global url."https://x-access-token:${{ secrets.ACTION_PAT }}@github.com/".insteadOf "https://github.com/"
-          git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
-          git config --global user.name "${{ secrets.ACTION_USER }}"
-          
-          # Configure Cargo to use git CLI for authentication
-          if (-not (Test-Path ~/.cargo)) { New-Item -ItemType Directory -Force -Path ~/.cargo }
-          @"
-          [net]
-          git-fetch-with-cli = true
-          "@ | Out-File -FilePath ~/.cargo/config.toml -Encoding utf8
-          
-          # Test Git authentication
-          Write-Host "Testing Git authentication..."
-          try { git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD } catch { Write-Host "Warning: Could not access private repository" }
-        shell: pwsh
-
-      - name: Install Rust
-        run: |
-          rustup set profile minimal
-          rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
-          rustup default nightly-2025-06-20
-          rustup override set nightly-2025-06-20
-
-      - name: Install zigbuild
-        run: cargo install cargo-zigbuild
-
-      - name: Build release
-        run: |
-          pwsh ./build/build-host-release.ps1 "full winservice"
-
-      - name: Upload Github Assets
-        uses: softprops/action-gh-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          files: build/release/*
-          prerelease: ${{ contains(needs.detect-release.outputs.tag, '-') }}
-          tag_name: ${{ needs.detect-release.outputs.tag }}
-          draft: false
-          fail_on_unmatched_files: true
-          generate_release_notes: true
+  # Windows build disabled - Windows users can use WSL (Windows Subsystem for Linux)
+  # See README.md for installation instructions
+  # build-release-windows:
+  #   needs: detect-release
+  #   if: needs.detect-release.outputs.should_release == 'true'
+  #   runs-on: windows-latest
+  #   env:
+  #     RUSTFLAGS: "-C target-feature=+crt-static"
+  #     RUST_BACKTRACE: full
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #     - uses: ilammy/setup-nasm@v1
+  #
+  #     - name: Configure Git for private repositories
+  #       run: |
+  #         # Configure Git authentication
+  #         git config --global url."https://x-access-token:${{ secrets.ACTION_PAT }}@github.com/".insteadOf "https://github.com/"
+  #         git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
+  #         git config --global user.name "${{ secrets.ACTION_USER }}"
+  #         
+  #         # Configure Cargo to use git CLI for authentication
+  #         if (-not (Test-Path ~/.cargo)) { New-Item -ItemType Directory -Force -Path ~/.cargo }
+  #         @"
+  #         [net]
+  #         git-fetch-with-cli = true
+  #         "@ | Out-File -FilePath ~/.cargo/config.toml -Encoding utf8
+  #         
+  #         # Test Git authentication
+  #         Write-Host "Testing Git authentication..."
+  #         try { git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD } catch { Write-Host "Warning: Could not access private repository" }
+  #       shell: pwsh
+  #
+  #     - name: Install Rust
+  #       run: |
+  #         rustup set profile minimal
+  #         rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
+  #         rustup default nightly-2025-06-20
+  #         rustup override set nightly-2025-06-20
+  #
+  #     - name: Install zigbuild
+  #       run: cargo install cargo-zigbuild
+  #
+  #     - name: Build release
+  #       run: |
+  #         pwsh ./build/build-host-release.ps1 "full winservice"
+  #
+  #     - name: Upload Github Assets
+  #       uses: softprops/action-gh-release@v2
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         files: build/release/*
+  #         prerelease: ${{ contains(needs.detect-release.outputs.tag, '-') }}
+  #         tag_name: ${{ needs.detect-release.outputs.tag }}
+  #         draft: false
+  #         fail_on_unmatched_files: true
+  #         generate_release_notes: true

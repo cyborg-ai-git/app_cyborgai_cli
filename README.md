@@ -36,7 +36,7 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 - **Interactive AI Chat Interface** with persistent conversation history
 - **Multi-Panel Layout** featuring Chat, File Explorer, Git operations, Settings, and Help panels
 - **Full Mouse Support** with click navigation, scrolling, and modern UI interactions📖 
-- **Cross-Platform Compatibility** for macOS, Linux, and Windows
+- **Cross-Platform Compatibility** for macOS and Linux (Windows users can use WSL)
 - **Session Management** with automatic saving and restoration
 - **Built-in Help System** with comprehensive keyboard shortcuts
 - **Git and Github Integration** for repository management
@@ -71,6 +71,12 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 
 ### Prerequisites
 
+> ⚠️ **Windows Users**: Native Windows builds are currently not available. Windows users should use **Windows Subsystem for Linux (WSL)** to run CyborgAI CLI. 
+> 
+> **Install WSL**: https://ubuntu.com/desktop/wsl
+> 
+> After installing WSL, follow the Linux installation instructions below.
+
 #### Install Rust
 Rust is required to build and run the application. See detailed installation instructions:
 📖 **[Install Rust Guide](install_rust.md)**
@@ -91,27 +97,14 @@ chmod +x scripts/install.sh
 
 ---
 
-
-| Tool                | Description                                               | Documentation                                        |
-|---------------------|-----------------------------------------------------------|------------------------------------------------------|
-| **GitHub CLI (gh)** | Required for repository and issue management scripts      | 📖 **[Install GitHub CLI Guide](install_gh.md)**     |
-| **Git Flow**        | Used for organized development workflow                   | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
-| **PlantUML**        | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
-| **Pandoc**          | Required for document export to PDF, DOC, ODT formats     | 📖 **[Install Pandoc Guide](install_pandoc.md)**     |
-
-**Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
-
----
-
-
 ## Additional Requirements
 
-| Tool | Description | Documentation |
-|------|-------------|---------------|
-| **GitHub CLI (gh)** | Required for repository and issue management scripts | 📖 **[Install GitHub CLI Guide](install_gh.md)** |
-| **Git Flow** | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
-| **PlantUML** | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
-| **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](install_pandoc.md)** |
+| Tool                | Description                                                           | Documentation                                        |
+|---------------------|-----------------------------------------------------------------------|------------------------------------------------------|
+| **GitHub CLI (gh)** | Required for repository and issue management scripts                  | 📖 **[Install GitHub CLI Guide](install_gh.md)**     |
+| **Git Flow**        | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
+| **PlantUML**        | Required for diagram generation in `run_documentation.sh`             | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
+| **Pandoc**          | Required for document export to PDF, DOC, ODT formats                 | 📖 **[Install Pandoc Guide](install_pandoc.md)**     |
 
 **Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
 
@@ -274,6 +267,8 @@ The `scripts/` folder contains automation scripts for development workflow:
    - **Settings**: Application configuration
    - **Help**: Keyboard shortcuts and usage guide
 
+---
+
 ## Development Workflow
 
 This repository uses **Git Flow** branching strategy for organized development:
@@ -284,48 +279,17 @@ This repository uses **Git Flow** branching strategy for organized development:
 - **`feature/*`**: Feature development branches (e.g., `feature/issue_123_new_feature`)
 - **`release/*`**: Release preparation branches (e.g., `release/v1.2.0`)
 
-**Note on Hotfix Branches**: We do not use `hotfix/*` branches in our CyborgAI standard workflow. All code must be fully tested and verified before deployment. We believe that good code takes time, and proper testing through the standard feature → develop → release → master flow ensures quality and stability.
+> **Note on Hotfix Branches**: We do not use `hotfix/*` branches in our CyborgAI standard workflow. All code must be fully tested and verified before deployment. We believe that good code takes time, and proper testing through the standard feature → develop → release → master flow ensures quality and stability.
 
-### Workflow Commands
-```bash
-# Start new feature
-./scripts/run_issue_create.sh "Issue/Feature description"
+---
 
-# Work on existing issue  => example: https://github.com/cyborg-ai-git/app_cyborgai_cli/issues/123 
-./scripts/run_issue_start.sh 123
-
-# Regular commits
-./scripts/run_git_push.sh "commit message"
-
-# Create release (creates PR from develop to master)
-./scripts/run_git_push_release.sh "Release message" release
-
-# Finish feature work
-./scripts/run_issue_finish.sh 123
-```
-
-### Release Process
+## Release Process
 Our release process uses a pull request workflow for better control and review:
 
-1. **Create Release PR**: Run `./scripts/run_git_push_release.sh "Release v1.0.0" release`
-   - Creates a tag on the develop branch
-   - Opens a pull request from develop to master
-   - Includes detailed release information
-
-2. **Review & Approve**: Team reviews the pull request for:
-   - Code quality and completeness
-   - Version number accuracy
-   - Release notes and documentation
-
-3. **Automated Build**: When the PR is merged to master:
-   - GitHub Actions automatically detects the release tag
-   - Builds cross-platform binaries (Linux, Windows, macOS)
-   - Creates a GitHub release with all binaries attached
-
-4. **Supported Platforms**: Automatic builds for:
-   - **Linux**: x86_64, ARM variants, MIPS variants (musl and gnu)
-   - **Windows**: x86_64
-   - **macOS**: x86_64 and ARM64 (Apple Silicon)
+1. **Supported Platforms**: Automatic builds for:
+   - **Linux**: x86_64-unknown-linux-gnu, x86_64-unknown-linux-musl
+   - **macOS**: x86_64-apple-darwin, aarch64-apple-darwin (Apple Silicon)
+   - **Windows**: Not currently supported natively (use WSL instead)
 
 ---
 
@@ -335,34 +299,12 @@ Our release process uses a pull request workflow for better control and review:
 
 1. **Fork the Repository**: Create your own fork of the project
 2. **Create an Issue**: Use our automated script to create issues and Git Flow feature branches:
-   ```bash
-   ./scripts/run_issue_create.sh "Your feature or bug description" "Detailed description"
-   ```
 3. **Start Feature Branch**: Use Git Flow to start working on the issue:
-   ```bash
-   git flow feature start your-feature-name
-   # or use our automation script
-   ./scripts/run_issue_start.sh 123
-   ```
 4. **Follow EVO Framework**: Adhere to naming conventions and architecture patterns
 5. **Write Tests**: Include appropriate test coverage
 6. **Submit Pull Request**: Use Git Flow to finish and target the `develop` branch:
-   ```bash
-   git flow feature finish your-feature-name
-   # or use our automation script
-   ./scripts/run_issue_finish.sh 123
-   ```
 7. **Code Review**: Participate in the review process
 
-### 📋 GitHub Templates & Community Standards
-
-This repository includes comprehensive GitHub templates and community standards located in the `.github/` directory:
-
-- **`.github/CODE_OF_CONDUCT.md`**: Community guidelines and expected behavior
-- **`.github/ISSUE_TEMPLATE/`**: Standardized issue templates for bugs, features, and documentation
-- **`.github/PULL_REQUEST_TEMPLATE.md`**: Pull request template with checklist
-- **`.github/CONTRIBUTING.md`**: Detailed contribution guidelines
-- **`.github/SECURITY.md`**: Security policy and vulnerability reporting
 
 ### 🛠️ Automated Contribution Workflow
 
@@ -370,7 +312,8 @@ Use our automated scripts for streamlined contributions:
 
 ```bash
 # Create a new issue and feature branch
-./scripts/run_issue_create.sh type "Title" "Detailed description"
+# type: [issue|feature|doc|performance]
+./scripts/run_issue_create.sh type "title" "detailed description"
 
 #examples:
 # Create a bug report
@@ -391,6 +334,15 @@ Use our automated scripts for streamlined contributions:
 # Finish your work and create a pull request
 ./scripts/run_issue_finish.sh 123
 ```
+### 📋 GitHub Templates & Community Standards
+
+This repository includes comprehensive GitHub templates and community standards located in the `.github/` directory:
+
+- **`.github/CODE_OF_CONDUCT.md`**: Community guidelines and expected behavior
+- **`.github/ISSUE_TEMPLATE/`**: Standardized issue templates for bugs, features, and documentation
+- **`.github/PULL_REQUEST_TEMPLATE.md`**: Pull request template with checklist
+- **`.github/CONTRIBUTING.md`**: Detailed contribution guidelines
+- **`.github/SECURITY.md`**: Security policy and vulnerability reporting
 
 ---
 
@@ -408,7 +360,7 @@ Use our automated scripts for streamlined contributions:
 
 ## Documentation
 **[EVO Framework Documentation](https://github.com/cyborg-ai-git/doc_evo.git)**
-
+**[CyborgAI cli Documentation](documentation/doc/cyborgai_cli/index.html)**
 ---
 
 ## License

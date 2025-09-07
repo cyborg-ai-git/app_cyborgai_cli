@@ -69,21 +69,23 @@ echo "Executing: $BUILD_CMD"
 
 # Determine if we're in the build directory or root directory
 if [ -d "app_cyborgai_cli" ]; then
-    # We're in the root directory
-    cd app_cyborgai_cli
-    BUILD_DIR="../build"
+    # We're in the root directory - this is a workspace build
+    BUILD_DIR="build"
+    WORKSPACE_ROOT="."
 elif [ -d "../app_cyborgai_cli" ]; then
     # We're in the build directory
-    cd ../app_cyborgai_cli
-    BUILD_DIR="../build"
+    BUILD_DIR="."
+    WORKSPACE_ROOT=".."
 else
     echo "Error: Cannot find app_cyborgai_cli directory"
     exit 1
 fi
 
+# Build from workspace root since this is a workspace
+cd "$WORKSPACE_ROOT"
 eval $BUILD_CMD
 
-# Find the built binary
+# Find the built binary - in workspace builds, target is in the workspace root
 BINARY_NAME="cyborgai_cli"
 if [[ "$TARGET" == *"-windows-"* ]]; then
     BINARY_NAME="cyborgai_cli.exe"
