@@ -205,19 +205,30 @@ else
     echo "💡 You can close it manually: gh issue close $ISSUE_NUMBER"
 fi
 #---------------------------------------------------------------------------------------------------
-# Finish git flow feature (merge to develop locally)
-echo "🔄 Finishing git flow feature..."
+# Prepare for pull request by rebasing on latest develop
+echo "🔄 Preparing branch for pull request..."
 
 # Switch to develop and pull latest
+echo "📥 Updating develop branch..."
 git checkout develop
 git pull origin develop
 
-# Finish the feature branch (this merges to develop and deletes the feature branch)
-git flow feature finish "$BRANCH_NAME"
+git switch "$CURRENT_BRANCH"
 
-# Push develop with the merged changes
-echo "📤 Pushing develop branch..."
-git push origin develop
+# Switch back to feature branch and rebase on develop
+#echo "🔄 Rebasing feature branch on develop..."
+#git switch "$CURRENT_BRANCH"
+#git rebase develop
+
+# Push the rebased feature branch
+#echo "📤 Pushing rebased feature branch..."
+#git push origin "$CURRENT_BRANCH" --force-with-lease
+
+git flow feature finish "$CURRENT_BRANCH"
+
+gh pr view "$PR_NUMBER"
+bash "./run_issue_list.sh"
+
 #---------------------------------------------------------------------------------------------------
 echo ""
 echo "🎉 SUCCESS! Issue workflow completed:"
@@ -226,18 +237,13 @@ echo "   🔀 Pull Request: $PR_OUTPUT"
 if [ -n "$PR_NUMBER" ]; then
     echo "   📋 PR Number: #$PR_NUMBER"
 fi
-echo "   🌿 Feature branch: $CURRENT_BRANCH (merged and deleted locally)"
-echo "   🔄 Current branch: develop"
+echo "   🌿 Feature branch: $CURRENT_BRANCH (rebased and ready for review)"
+echo "   🔄 Current branch: $CURRENT_BRANCH"
 echo ""
 echo "💡 Next steps:"
-echo "   1. Review the pull request: gh pr view $PR_NUMBER"
-echo "   2. Wait for PR approval and merge"
-echo "   3. The remote feature branch will be deleted after PR merge"
-echo ""
-echo "🔧 Useful commands:"
-echo "   - View PR: gh pr view $PR_NUMBER"
-echo "   - List PRs: gh pr list"
-echo "   - View closed issue: gh issue view $ISSUE_NUMBER"
+echo "   1. Wait for PR approval and merge"
+echo "   2. After PR is merged, the remote feature branch will be deleted"
+echo "   3. You can then switch to develop and pul
 #---------------------------------------------------------------------------------------------------
 cd "$CURRENT_DIRECTORY" || exit
 #===================================================================================================

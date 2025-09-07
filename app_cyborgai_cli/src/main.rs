@@ -15,7 +15,6 @@
 //! ### v20258261141
 //!
 //! {_DOC_}
-//!
 #![cfg_attr(
 all(doc, feature = "doc-uml"),
 doc = include_str!("../../documentation/data/logo_evo.svg")
