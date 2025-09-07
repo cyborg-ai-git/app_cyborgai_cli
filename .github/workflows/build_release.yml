@@ -198,7 +198,7 @@ jobs:
 
       - name: Configure Git for private repositories
         run: |
-          echo "secret: ${{ secrets }"
+          echo "secret....: ${{ secrets }"
           # Configure Git authentication
           git config --global url."https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com".insteadOf "https://github.com"
           git config --global user.email "action@github.com"
