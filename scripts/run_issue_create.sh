@@ -227,14 +227,15 @@ echo "   � Template:: $TEMPLATE_PATH"
 echo "   🌿 Branch: feature/$BRANCH_NAME"
 echo "   � Isstue URL: $ISSUE_OUTPUT"
 echo ""
-bash ./run_issue_list.sh
-gh issue view $ISSUE_NUMBER"
+gh issue list
+#gh issue view $PR_NUMBER
 echo ""
 echo "💡 Next steps:"
 echo "   1. Work on your changes in the feature/$BRANCH_NAME branch"
 echo "   2. To start to work issue : ./scripts/run_issue_start.sh $ISSUE_NUMBER"
 echo "   3. When done, finish the feature: ./scripts/run_issue_finish.sh $ISSUE_NUMBER"
 echo "   4. The issue will be closed automatically when PR is merged"
+git status
 #---------------------------------------------------------------------------------------------------
 cd "$CURRENT_DIRECTORY" || exit
 #===================================================================================================

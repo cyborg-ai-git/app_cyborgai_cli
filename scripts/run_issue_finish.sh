@@ -225,10 +225,8 @@ git switch "$CURRENT_BRANCH"
 #git push origin "$CURRENT_BRANCH" --force-with-lease
 
 git flow feature finish "$CURRENT_BRANCH"
-
+gh issue list
 gh pr view "$PR_NUMBER"
-bash "./run_issue_list.sh"
-
 #---------------------------------------------------------------------------------------------------
 echo ""
 echo "🎉 SUCCESS! Issue workflow completed:"
