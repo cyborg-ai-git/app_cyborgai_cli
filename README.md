@@ -367,6 +367,8 @@ Use our automated scripts for streamlined contributions:
 ./scripts/run_issue_finish.sh 123
 ```
 
+---
+
 ### 📝 Contribution Guidelines
 
 - Follow the **[EVO Framework standard conventions](https://github.com/cyborg-ai-git/doc_evo.git)**
