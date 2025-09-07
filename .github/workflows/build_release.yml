@@ -192,14 +192,15 @@ jobs:
           - x86_64-apple-darwin
           - aarch64-apple-darwin
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure Git for private repositories
         run: |
+          echo "secret: ${{ secrets }"
           # Configure Git authentication
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com".insteadOf "https://github.com"
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           
