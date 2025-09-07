@@ -45,7 +45,7 @@ jobs:
         
           # Debug: Check git config
           echo "Git config:"
-          git config --global --list | grep url || true
+          git config --global --list
           
           # Test authentication with more detail
           echo "Testing Git authentication..."
