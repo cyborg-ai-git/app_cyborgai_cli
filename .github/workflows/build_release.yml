@@ -119,16 +119,19 @@ jobs:
       - name: Install LLVM and Clang
         run: sudo apt install -y clang
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4  # v5 doesn't exist yet as of my knowledge
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
+          token: ${{ secrets.GITHUB_TOKEN }}  # This is automatically provided
+      
       - name: Configure Git for private repositories
         run: |
-          # Configure Git authentication
-          git config --global url."https://${{ secrets.GIT_CREDENTIALS }}@github.com".insteadOf https://github.com
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
+          # Configure Git authentication for private repos
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "git@github.com:"
+    
+          # Set git user (using github-actions bot)
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
           
           # Test Git authentication
           echo "Testing Git authentication..."
