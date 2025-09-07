@@ -10,15 +10,17 @@ DIRECTORY_BASE=$(dirname "$(realpath "$0")")
 clear
 #===================================================================================================
 CURRENT_TIME=$(date +"%Y.%-m.%-d%H%M")
-echo "🟢 $CURRENT_TIME RUN development $PACKAGE_NAME [$DIRECTORY_BASE]"
+echo "🟢 $CURRENT_TIME INSTALL $PACKAGE_NAME [$DIRECTORY_BASE]"
 #===================================================================================================
 CURRENT_DIRECTORY=$(pwd)
 #===================================================================================================
 cd "$DIRECTORY_BASE" || exit
 cd ..
 #===================================================================================================
-export RUST_LOG=info
-cargo run
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source "$HOME/.bashrc"
+cargo -V
+cargo install audit
 #===================================================================================================
 cd "$CURRENT_DIRECTORY" || exit
 #===================================================================================================

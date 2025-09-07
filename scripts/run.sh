@@ -7,7 +7,7 @@
 PACKAGE_NAME="$(basename "$(pwd)")"
 DIRECTORY_BASE=$(dirname "$(realpath "$0")")
 #===================================================================================================
-#clear
+clear
 #===================================================================================================
 CURRENT_TIME=$(date +"%Y.%-m.%-d%H%M")
 echo "🟢 $CURRENT_TIME RUN release $PACKAGE_NAME [$DIRECTORY_BASE]"
@@ -17,7 +17,7 @@ CURRENT_DIRECTORY=$(pwd)
 cd "$DIRECTORY_BASE" || exit
 cd ..
 #===================================================================================================
-export RUST_LOG=info
+export RUST_LOG=error
 cargo run --release
 #===================================================================================================
 cd "$CURRENT_DIRECTORY" || exit

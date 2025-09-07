@@ -1,4 +1,5 @@
 [toolchain]
-channel = "nightly-2024-12-01"
-components = ["rustfmt", "clippy", "audit"]
-targets = ["x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "wasm32-unknown-unknown"]
+#1.89.0-nightly
+channel = "nightly-2025-06-20"
+components = ["rustc", "rust-std", "cargo", "clippy", "rustfmt"]
+#targets = ["x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "wasm32-unknown-unknown"]
