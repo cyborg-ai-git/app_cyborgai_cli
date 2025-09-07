@@ -122,16 +122,9 @@ jobs:
       - name: Configure Git for private repositories
         run: |
           # Configure Git authentication
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://${{ secrets.GIT_CREDENTIALS }}@github.com".insteadOf https://github.com
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          
-          # Configure Cargo to use git CLI for authentication
-          mkdir -p ~/.cargo
-          cat > ~/.cargo/config.toml << EOF
-          [net]
-          git-fetch-with-cli = true
-          EOF
           
           # Test Git authentication
           echo "Testing Git authentication..."
@@ -199,16 +192,9 @@ jobs:
       - name: Configure Git for private repositories
         run: |
           # Configure Git authentication
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://${{ secrets.GIT_CREDENTIALS }}@github.com".insteadOf https://github.com
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          
-          # Configure Cargo to use git CLI for authentication
-          mkdir -p ~/.cargo
-          cat > ~/.cargo/config.toml << EOF
-          [net]
-          git-fetch-with-cli = true
-          EOF
           
           # Test Git authentication
           echo "Testing Git authentication..."
@@ -262,16 +248,9 @@ jobs:
       - name: Configure Git for private repositories
         run: |
           # Configure Git authentication
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://${{ secrets.GIT_CREDENTIALS }}@github.com".insteadOf https://github.com
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          
-          # Configure Cargo to use git CLI for authentication
-          if (-not (Test-Path ~/.cargo)) { New-Item -ItemType Directory -Force -Path ~/.cargo }
-          @"
-          [net]
-          git-fetch-with-cli = true
-          "@ | Out-File -FilePath ~/.cargo/config.toml -Encoding utf8
           
           # Test Git authentication
           Write-Host "Testing Git authentication..."
