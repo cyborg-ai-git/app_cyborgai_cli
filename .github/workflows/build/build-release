@@ -55,7 +55,7 @@ mkdir -p release
 # Build command - use zigbuild for cross-compilation
 BUILD_CMD="cargo zigbuild --release --target $TARGET"
 
-if [ "$FEATURES" != "" ] && [ "$FEATURES" != "full" ] && [ "$FEATURES" != "default" ]; then
+if [ "$FEATURES" != "" ]; then
     # Remove the -f prefix if present
     CLEAN_FEATURES=$(echo "$FEATURES" | sed 's/^-f //')
     BUILD_CMD="$BUILD_CMD --features $CLEAN_FEATURES"
@@ -69,23 +69,21 @@ echo "Executing: $BUILD_CMD"
 
 # Determine if we're in the build directory or root directory
 if [ -d "app_cyborgai_cli" ]; then
-    # We're in the root directory - this is a workspace build
-    BUILD_DIR="build"
-    WORKSPACE_ROOT="."
+    # We're in the root directory
+    cd app_cyborgai_cli
+    BUILD_DIR="../build"
 elif [ -d "../app_cyborgai_cli" ]; then
     # We're in the build directory
-    BUILD_DIR="."
-    WORKSPACE_ROOT=".."
+    cd ../app_cyborgai_cli
+    BUILD_DIR="../build"
 else
     echo "Error: Cannot find app_cyborgai_cli directory"
     exit 1
 fi
 
-# Build from workspace root since this is a workspace
-cd "$WORKSPACE_ROOT"
 eval $BUILD_CMD
 
-# Find the built binary - in workspace builds, target is in the workspace root
+# Find the built binary
 BINARY_NAME="cyborgai_cli"
 if [[ "$TARGET" == *"-windows-"* ]]; then
     BINARY_NAME="cyborgai_cli.exe"
