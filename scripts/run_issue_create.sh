@@ -9,8 +9,14 @@ PACKAGE_NAME="$(basename "$(pwd)")"
 #---------------------------------------------------------------------------------------------------
 clear
 #---------------------------------------------------------------------------------------------------
-echo "Usage: $0 'issue_title' ['issue_description']"
-echo "Creates a GitHub issue and corresponding git flow feature branch"
+echo "Usage: $0 <type> 'issue_title' 'issue_description'"
+echo "Creates a GitHub issue using templates and corresponding git flow feature branch"
+echo ""
+echo "Types:"
+echo "  issue       - Bug report (.github/ISSUE_TEMPLATE/bug_report.md)"
+echo "  feature     - Feature request (.github/ISSUE_TEMPLATE/feature_request.md)"
+echo "  doc         - Documentation (.github/ISSUE_TEMPLATE/documentation.md)"
+echo "  performance - Performance issue (.github/ISSUE_TEMPLATE/performance.md)"
 echo ""
 #---------------------------------------------------------------------------------------------------
 CURRENT_TIME=$(date +"%Y.%-m.%-d%H%M")
@@ -20,16 +26,48 @@ cd "$DIRECTORY_BASE" || exit
 cd ..
 #---------------------------------------------------------------------------------------------------
 # Check if we have required parameters
-if [ -z "$1" ]; then
-    echo "❌ Error: Issue title is required"
-    echo "Usage: $0 'issue_title' ['issue_description']"
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
+    echo "❌ Error: Issue type, title, and description are required"
+    echo "Usage: $0 <type> 'issue_title' 'issue_description'"
+    echo ""
+    echo "Valid types: issue, feature, doc, performance"
     exit 1
 fi
 
-ISSUE_TITLE="$1"
-ISSUE_DESCRIPTION="$2"
+ISSUE_TYPE="$1"
+ISSUE_TITLE="$2"
+ISSUE_DESCRIPTION="$3"
 
-echo "🟢 $CURRENT_TIME - CREATE ISSUE AND BRANCH FOR: $ISSUE_TITLE"
+# Validate issue type and set template path
+case "$ISSUE_TYPE" in
+    "issue")
+        TEMPLATE_PATH=".github/ISSUE_TEMPLATE/bug_report.md"
+        ;;
+    "feature")
+        TEMPLATE_PATH=".github/ISSUE_TEMPLATE/feature_request.md"
+        ;;
+    "doc")
+        TEMPLATE_PATH=".github/ISSUE_TEMPLATE/documentation.md"
+        ;;
+    "performance")
+        TEMPLATE_PATH=".github/ISSUE_TEMPLATE/performance.md"
+        ;;
+    *)
+        echo "❌ Error: Invalid issue type '$ISSUE_TYPE'"
+        echo "Valid types: issue, feature, doc, performance"
+        exit 1
+        ;;
+esac
+
+# Check if template exists
+if [ ! -f "$TEMPLATE_PATH" ]; then
+    echo "❌ Error: Template not found: $TEMPLATE_PATH"
+    exit 1
+fi
+
+echo "📋 Using template: $TEMPLATE_PATH"
+
+echo "🟢 $CURRENT_TIME - CREATE $ISSUE_TYPE ISSUE AND BRANCH FOR: $ISSUE_TITLE"
 #---------------------------------------------------------------------------------------------------
 # Check if git repository exists
 if [ ! -d .git ]; then
@@ -79,14 +117,68 @@ fi
 
 echo "✅ Repository found: $(echo "$REPO_INFO" | grep -o '"name":"[^"]*"' | cut -d'"' -f4)"
 #---------------------------------------------------------------------------------------------------
-# Create GitHub issue
-echo "📝 Creating GitHub issue..."
+# Create GitHub issue using template
+echo "📝 Creating GitHub issue using template..."
 
-if [ -z "$ISSUE_DESCRIPTION" ]; then
-    ISSUE_OUTPUT=$(gh issue create --title "$ISSUE_TITLE" --body "Issue created on $CURRENT_TIME")
+# Check if gh supports template editing
+GH_VERSION=$(gh --version | head -n1 | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+')
+echo "🔍 GitHub CLI version: $GH_VERSION"
+
+# Create temporary file for issue content
+TEMP_ISSUE_FILE=$(mktemp)
+
+# Copy template content to temp file and automatically insert the issue title
+cp "$TEMPLATE_PATH" "$TEMP_ISSUE_FILE"
+
+# Replace the title placeholder in the template with the actual issue title
+# This handles the YAML front matter title field
+sed -i.bak "s/title: '\[.*\].*'/title: '$ISSUE_TITLE'/" "$TEMP_ISSUE_FILE" 2>/dev/null || true
+sed -i.bak "s/title: \[.*\].*/title: '$ISSUE_TITLE'/" "$TEMP_ISSUE_FILE" 2>/dev/null || true
+
+# Add the issue description to the template
+# Insert description after the YAML front matter (after the second ---)
+awk -v desc="$ISSUE_DESCRIPTION" '
+/^---$/ { count++ }
+count == 2 && !inserted { 
+    print $0
+    print ""
+    print "## Issue Description"
+    print desc
+    print ""
+    inserted = 1
+    next
+}
+{ print }
+' "$TEMP_ISSUE_FILE" > "$TEMP_ISSUE_FILE.tmp" && mv "$TEMP_ISSUE_FILE.tmp" "$TEMP_ISSUE_FILE"
+
+# Clean up backup file created by sed
+rm -f "$TEMP_ISSUE_FILE.bak"
+
+echo "📝 Opening editor to customize issue content..."
+echo "💡 Template loaded from: $TEMPLATE_PATH"
+echo "💡 Issue title automatically inserted: $ISSUE_TITLE"
+echo "💡 Issue description automatically inserted: $ISSUE_DESCRIPTION"
+echo "💡 Please review and customize the template as needed"
+
+# Use default editor (respects EDITOR environment variable, falls back to vim/nano)
+if [ -n "$EDITOR" ]; then
+    "$EDITOR" "$TEMP_ISSUE_FILE"
+elif command -v vim >/dev/null 2>&1; then
+    vim "$TEMP_ISSUE_FILE"
+elif command -v nano >/dev/null 2>&1; then
+    nano "$TEMP_ISSUE_FILE"
 else
-    ISSUE_OUTPUT=$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_DESCRIPTION")
+    echo "❌ No suitable editor found. Please set EDITOR environment variable or install vim/nano"
+    rm "$TEMP_ISSUE_FILE"
+    exit 1
 fi
+
+# Create issue with edited content
+ISSUE_BODY=$(cat "$TEMP_ISSUE_FILE")
+ISSUE_OUTPUT=$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY")
+
+# Clean up temp file
+rm "$TEMP_ISSUE_FILE"
 
 # Extract issue number from output
 ISSUE_NUMBER=$(echo "$ISSUE_OUTPUT" | grep -o '/issues/[0-9]\+' | sed 's/#//')
@@ -128,20 +220,22 @@ echo "📤 Pushing branch to remote..."
 git push -u origin "feature/$BRANCH_NAME"
 
 echo ""
-echo "🟢 SUCCESS! Issue and branch created:"
+echo "🟢 SUCCESS! $ISSUE_TYPE issue and branch created:"
 echo "   📋 Issue: #$ISSUE_NUMBER - $ISSUE_TITLE"
+echo "   📋 Type: $ISSUE_TYPE"
+echo "   � Template:: $TEMPLATE_PATH"
 echo "   🌿 Branch: feature/$BRANCH_NAME"
-echo "   🔗 Issue URL: $ISSUE_OUTPUT"
+echo "   � Isstue URL: $ISSUE_OUTPUT"
+echo ""
+gh issue list
+#gh issue view $PR_NUMBER
 echo ""
 echo "💡 Next steps:"
 echo "   1. Work on your changes in the feature/$BRANCH_NAME branch"
-echo "   2. When done, finish the feature: git flow feature finish $BRANCH_NAME"
-echo "   3. Close the issue: gh issue close $ISSUE_NUMBER"
-echo ""
-echo "🔧 Useful commands:"
-echo "   - Check current branch: git branch --show-current"
-echo "   - View issue: gh issue view $ISSUE_NUMBER"
-echo "   - List all issues: scripts/run_issue_list.sh"
+echo "   2. To start to work issue : ./scripts/run_issue_start.sh $ISSUE_NUMBER"
+echo "   3. When done, finish the feature: ./scripts/run_issue_finish.sh $ISSUE_NUMBER"
+echo "   4. The issue will be closed automatically when PR is merged"
+git status
 #---------------------------------------------------------------------------------------------------
 cd "$CURRENT_DIRECTORY" || exit
 #===================================================================================================

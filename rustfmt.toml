@@ -1,5 +1,5 @@
 # Rust formatting configuration
-edition = "2021"
+edition = "2024"
 max_width = 100
 hard_tabs = false
 tab_spaces = 4
@@ -45,7 +45,6 @@ trailing_comma = "Vertical"
 match_block_trailing_comma = false
 blank_lines_upper_bound = 1
 blank_lines_lower_bound = 0
-edition = "2021"
 version = "Two"
 inline_attribute_width = 0
 merge_derives = true
