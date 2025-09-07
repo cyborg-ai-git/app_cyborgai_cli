@@ -122,17 +122,10 @@ jobs:
       - name: Configure Git for private repositories
         run: |
           # Configure Git authentication
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          
-          # Configure Cargo to use git CLI for authentication
-          mkdir -p ~/.cargo
-          cat > ~/.cargo/config.toml << EOF
-          [net]
-          git-fetch-with-cli = true
-          EOF
-          
+          git config --global "url.https://x-access-token:${{ secrets.ACTION_PAT }}@github.com.insteadof" "https://github.com"
+          # Set git user (using github-actions bot)
+          git config --global user.name "${{ secrets.ACTION_USER }}"
+          git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
           # Test Git authentication
           echo "Testing Git authentication..."
           git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD || echo "Warning: Could not access private repository"
@@ -192,17 +185,17 @@ jobs:
           - x86_64-apple-darwin
           - aarch64-apple-darwin
     steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Configure Git for private repositories
         run: |
-        
           # Configure Git authentication
-          git config --global "url.https://x-access-token:${{secrets.ACTION_PAT}}@github.com.insteadof" "https://github.com"
-          
+          git config --global "url.https://x-access-token:${{ secrets.ACTION_PAT }}@github.com.insteadof" "https://github.com"
           # Set git user (using github-actions bot)
           git config --global user.name "${{ secrets.ACTION_USER }}"
           git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
-          
-         
           # Test Git authentication
           echo "Testing Git authentication..."
           git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD || echo "Warning: Could not access private repository"
@@ -255,9 +248,9 @@ jobs:
       - name: Configure Git for private repositories
         run: |
           # Configure Git authentication
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
+          git config --global url."https://x-access-token:${{ secrets.ACTION_PAT }}@github.com/".insteadOf "https://github.com/"
+          git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
+          git config --global user.name "${{ secrets.ACTION_USER }}"
           
           # Configure Cargo to use git CLI for authentication
           if (-not (Test-Path ~/.cargo)) { New-Item -ItemType Directory -Force -Path ~/.cargo }
