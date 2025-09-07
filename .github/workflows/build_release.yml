@@ -31,13 +31,11 @@ jobs:
     
       - name: Configure Git for private repositories
         run: |
-          echo "a ${{ secrets.ACTION_PAT }}"
+          echo "a ${{secrets.ACTION_PAT}}"
           echo "b ${{ secrets.ACTION_USER }}"
           echo "c ${{ secrets.ACTION_USER_EMAIL }}"
           # Configure Git authentication for private repos using PAT
-          git config --global url."https://${{ secrets.ACTION_PAT }}@github.com/".insteadOf "https://github.com/"
-          git config --global url."https://${{ secrets.ACION_PAT }}@github.com/".insteadOf "git@github.com:"
-          git config --global url."https://${{ secrets.ACTION_PAT }}@github.com/".insteadOf "ssh://git@github.com/"
+          git config --global "url.https://x-access-token:${{secrets.ACTION_PAT}}@github.com.insteadof" "https://github.com"
           
           # Set git user (using github-actions bot)
           git config --global user.name "${{ secrets.ACTION_USER }}"
