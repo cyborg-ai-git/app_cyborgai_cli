@@ -109,8 +109,14 @@ if [ "$2" = "release" ]; then
 
     # Create a tag on develop branch
     echo "🏷️ Creating tag: $RELEASE_VERSION"
-    git tag -a "$RELEASE_VERSION" -m "Release $RELEASE_VERSION"
-    git push origin "$RELEASE_VERSION"
+    if git tag -a "$RELEASE_VERSION" -m "Release $RELEASE_VERSION" 2>/dev/null; then
+        echo "✅ Tag $RELEASE_VERSION created successfully"
+        git push origin "$RELEASE_VERSION"
+    else
+        echo "⚠️ Tag $RELEASE_VERSION already exists, using existing tag"
+        # Force push the tag if it exists locally but might be different
+        git push origin "$RELEASE_VERSION" || echo "Tag already exists on remote"
+    fi
 
     # Check if GitHub CLI is available
     if ! command -v gh &> /dev/null; then
@@ -149,14 +155,24 @@ The following binaries will be automatically built and attached to the release:
 
 Release tag: \`$RELEASE_VERSION\`"
 
+    # Check if PR already exists
+    if gh pr view develop --json state 2>/dev/null | grep -q "OPEN"; then
+        echo "⚠️ Pull request from develop to master already exists"
+        PR_URL=$(gh pr view develop --json url --jq '.url' 2>/dev/null || echo "")
+        if [ -n "$PR_URL" ]; then
+            echo "🔗 Existing pull request: $PR_URL"
+        fi
+        echo "📋 You can update the existing PR or close it to create a new one"
+        exit 0
+    fi
+
     # Create the pull request
     if gh pr create \
         --title "$PR_TITLE" \
         --body "$PR_BODY" \
         --base master \
         --head develop \
-        --label "release" \
-        --assignee "@me"; then
+        --label "release"; then
         
         echo "🟢 Pull request created successfully!"
         echo "📋 Next steps:"
