@@ -162,8 +162,14 @@ jobs:
           # Always use nightly since we're using nightly-2025-06-20
           compile_nightly="-n"
 
-          cd build
-          ./build-release -t ${{ matrix.platform.target }} $compile_features $compile_nightly
+          ./build/build-release -t ${{ matrix.platform.target }} $compile_features $compile_nightly
+
+      - name: List build artifacts
+        run: |
+          echo "Contents of build directory:"
+          ls -la build/
+          echo "Contents of build/release directory:"
+          ls -la build/release/ || echo "build/release directory does not exist"
 
       - name: Upload Github Assets
         uses: softprops/action-gh-release@v2
