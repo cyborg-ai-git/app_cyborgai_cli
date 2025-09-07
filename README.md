@@ -345,7 +345,20 @@ Use our automated scripts for streamlined contributions:
 
 ```bash
 # Create a new issue and feature branch
-./scripts/run_issue_create.sh "Feature: Add new functionality" "Detailed description of the feature"
+./scripts/run_issue_create.sh type "Title" "Detailed description"
+
+#examples:
+# Create a bug report
+#./scripts/run_issue_create.sh issue "Fix ai agent tab" "Users can not ..."
+
+# Create a feature request  
+#./scripts/run_issue_create.sh feature "Add dark mode" "Implement dark theme support for better user experience ..."
+
+# Create a documentation issue
+#./scripts/run_issue_create.sh doc "Update API docs" "The agent tab section needs doc ..."
+
+# Create a performance issue
+#./scripts/run_issue_create.sh performance "Slow ..." "Application takes...."
 
 # Start working on an existing issue
 ./scripts/run_issue_start.sh 123
