@@ -289,7 +289,7 @@ This repository uses **Git Flow** branching strategy for organized development:
 ### Workflow Commands
 ```bash
 # Start new feature
-./scripts/run_issue_create.sh "Feature description"
+./scripts/run_issue_create.sh "Issue/Feature description"
 
 # Work on existing issue  => example: https://github.com/cyborg-ai-git/app_cyborgai_cli/issues/123 
 ./scripts/run_issue_start.sh 123
