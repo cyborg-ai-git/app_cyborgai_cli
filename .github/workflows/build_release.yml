@@ -192,7 +192,7 @@ jobs:
       - name: Configure Git for private repositories
         run: |
           # Configure Git authentication
-          git config --global url."https://${{ secrets.GIT_CREDENTIALS }}@github.com".insteadOf https://github.com
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf https://github.com
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           
@@ -249,8 +249,8 @@ jobs:
         run: |
           # Configure Git authentication
           git config --global url."https://${{ secrets.GIT_CREDENTIALS }}@github.com".insteadOf https://github.com
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
+          #git config --global user.email "action@github.com"
+          #git config --global user.name "GitHub Action"
           
           # Test Git authentication
           Write-Host "Testing Git authentication..."
