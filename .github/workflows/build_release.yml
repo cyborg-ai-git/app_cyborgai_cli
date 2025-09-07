@@ -16,6 +16,7 @@ permissions:
   contents: write
   pull-requests: read
   issues: read
+  repository-projects: read
 
 env:
   CARGO_TERM_COLOR: always
@@ -60,6 +61,10 @@ jobs:
           TAG="${{ steps.detect.outputs.tag }}"
           echo "Working with tag: $TAG"
           
+          # Configure Git identity for tag creation
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          
           # Check if tag exists
           if ! git tag -l | grep -q "^$TAG$"; then
             echo "Warning: Tag $TAG does not exist in repository"
@@ -100,54 +105,8 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - target: i686-unknown-linux-musl
-            toolchain: stable
-          - target: x86_64-pc-windows-gnu
-            toolchain: stable
           - target: x86_64-unknown-linux-gnu
-            toolchain: stable
           - target: x86_64-unknown-linux-musl
-            toolchain: stable
-          - target: armv7-unknown-linux-musleabihf
-            toolchain: stable
-          - target: armv7-unknown-linux-gnueabihf
-            toolchain: stable
-          - target: arm-unknown-linux-gnueabi
-            toolchain: stable
-          - target: arm-unknown-linux-gnueabihf
-            toolchain: stable
-          - target: arm-unknown-linux-musleabi
-            toolchain: stable
-          - target: arm-unknown-linux-musleabihf
-            toolchain: stable
-          - target: aarch64-unknown-linux-gnu
-            toolchain: stable
-          - target: aarch64-unknown-linux-musl
-            toolchain: stable
-          - target: mips-unknown-linux-gnu
-            toolchain: nightly
-          # cross mips-*-musl images are disabled
-          # - target: mips-unknown-linux-musl
-          #   toolchain: nightly
-          - target: mipsel-unknown-linux-gnu
-            toolchain: nightly
-          # - target: mipsel-unknown-linux-musl
-          #   toolchain: nightly
-          # FIXME: ring doesn't support mips64 CPU
-          # - target: mips64-unknown-linux-gnuabi64
-          #   toolchain: nightly
-          # - target: mips64-unknown-linux-muslabi64
-          #   toolchain: nightly
-          - target: mips64el-unknown-linux-gnuabi64
-            toolchain: nightly
-          # FIXME: Link Error.
-          #   = note: mips64el-linux-muslsf-gcc: error: crt1.o: No such file or directory
-          #           mips64el-linux-muslsf-gcc: error: crti.o: No such file or directory
-          #           mips64el-linux-muslsf-gcc: error: crtbegin.o: No such file or directory
-          #           mips64el-linux-muslsf-gcc: error: crtend.o: No such file or directory
-          #           mips64el-linux-muslsf-gcc: error: crtn.o: No such file or directory
-          # - target: mips64el-unknown-linux-muslabi64
-          #   toolchain: nightly
 
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -157,13 +116,33 @@ jobs:
         run: sudo apt install -y clang
 
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git for private repositories
+        run: |
+          # Configure Git authentication
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          
+          # Configure Cargo to use git CLI for authentication
+          mkdir -p ~/.cargo
+          cat > ~/.cargo/config.toml << EOF
+          [net]
+          git-fetch-with-cli = true
+          EOF
+          
+          # Test Git authentication
+          echo "Testing Git authentication..."
+          git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD || echo "Warning: Could not access private repository"
 
       - name: Install Rust
         run: |
           rustup set profile minimal
-          rustup toolchain install ${{ matrix.platform.toolchain }}
-          rustup default ${{ matrix.platform.toolchain }}
-          rustup override set ${{ matrix.platform.toolchain }}
+          rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
+          rustup default nightly-2025-06-20
+          rustup override set nightly-2025-06-20
 
       - name: Install cross
         run: cargo install cross --git https://github.com/cross-rs/cross
@@ -179,18 +158,11 @@ jobs:
             compile_features="$compile_features -f winservice"
           fi
 
-          if [[ "$compile_target" == "mips-"* || "$compile_target" == "mipsel-"* || "$compile_target" == "mips64-"* || "$compile_target" == "mips64el-"* ]]; then
-            sudo apt-get update -y && sudo apt-get install -y upx;
-            if [[ "$?" == "0" ]]; then
-              compile_compress="-u"
-            fi
-
-            compile_nightly="-n"
-            #compile_cargo_flags="-Z build-std=std,panic_abort,proc_macro"
-          fi
+          # Always use nightly since we're using nightly-2025-06-20
+          compile_nightly="-n"
 
           cd build
-          ./build-release -t ${{ matrix.platform.target }} $compile_features $compile_compress $compile_nightly $compile_cargo_flags
+          ./build-release -t ${{ matrix.platform.target }} $compile_features $compile_nightly
 
       - name: Upload Github Assets
         uses: softprops/action-gh-release@v2
@@ -221,6 +193,26 @@ jobs:
           - aarch64-apple-darwin
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git for private repositories
+        run: |
+          # Configure Git authentication
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          
+          # Configure Cargo to use git CLI for authentication
+          mkdir -p ~/.cargo
+          cat > ~/.cargo/config.toml << EOF
+          [net]
+          git-fetch-with-cli = true
+          EOF
+          
+          # Test Git authentication
+          echo "Testing Git authentication..."
+          git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD || echo "Warning: Could not access private repository"
 
       - name: Install GNU tar
         if: runner.os == 'macOS'
@@ -232,10 +224,10 @@ jobs:
       - name: Install Rust
         run: |
           rustup set profile minimal
-          rustup toolchain install stable
-          rustup default stable
-          rustup override set stable
-          rustup target add --toolchain stable ${{ matrix.target }}
+          rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
+          rustup default nightly-2025-06-20
+          rustup override set nightly-2025-06-20
+          rustup target add --toolchain nightly-2025-06-20 ${{ matrix.target }}
 
       - name: Build release
         shell: bash
@@ -263,14 +255,35 @@ jobs:
       RUST_BACKTRACE: full
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ilammy/setup-nasm@v1
+
+      - name: Configure Git for private repositories
+        run: |
+          # Configure Git authentication
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          
+          # Configure Cargo to use git CLI for authentication
+          if (-not (Test-Path ~/.cargo)) { New-Item -ItemType Directory -Force -Path ~/.cargo }
+          @"
+          [net]
+          git-fetch-with-cli = true
+          "@ | Out-File -FilePath ~/.cargo/config.toml -Encoding utf8
+          
+          # Test Git authentication
+          Write-Host "Testing Git authentication..."
+          try { git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD } catch { Write-Host "Warning: Could not access private repository" }
+        shell: pwsh
 
       - name: Install Rust
         run: |
           rustup set profile minimal
-          rustup toolchain install stable
-          rustup default stable
-          rustup override set stable
+          rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
+          rustup default nightly-2025-06-20
+          rustup override set nightly-2025-06-20
 
       - name: Build release
         run: |
