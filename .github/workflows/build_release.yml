@@ -192,13 +192,9 @@ jobs:
           - x86_64-apple-darwin
           - aarch64-apple-darwin
     steps:
-      - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Configure Git for private repositories
         run: |
-          echo "secret....: ${{ secrets }"
+        
           # Configure Git authentication
           git config --global "url.https://x-access-token:${{secrets.ACTION_PAT}}@github.com.insteadof" "https://github.com"
           
@@ -206,7 +202,7 @@ jobs:
           git config --global user.name "${{ secrets.ACTION_USER }}"
           git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
           
-          
+         
           # Test Git authentication
           echo "Testing Git authentication..."
           git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD || echo "Warning: Could not access private repository"
