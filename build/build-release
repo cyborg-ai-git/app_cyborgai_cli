@@ -1,0 +1,99 @@
+#!/bin/bash
+#===================================================================================================
+# CyborgAI Build Release Script
+# CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
+#===================================================================================================
+
+set -e
+
+# Default values
+TARGET=""
+FEATURES=""
+COMPRESS=""
+NIGHTLY=""
+CARGO_FLAGS=""
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -t|--target)
+            TARGET="$2"
+            shift 2
+            ;;
+        -f|--features)
+            FEATURES="$2"
+            shift 2
+            ;;
+        -u|--upx)
+            COMPRESS="true"
+            shift
+            ;;
+        -n|--nightly)
+            NIGHTLY="true"
+            shift
+            ;;
+        *)
+            CARGO_FLAGS="$CARGO_FLAGS $1"
+            shift
+            ;;
+    esac
+done
+
+if [ -z "$TARGET" ]; then
+    echo "Error: Target not specified. Use -t <target>"
+    exit 1
+fi
+
+echo "Building for target: $TARGET"
+echo "Features: $FEATURES"
+echo "Compress: $COMPRESS"
+echo "Nightly: $NIGHTLY"
+
+# Create release directory
+mkdir -p release
+
+# Build command
+BUILD_CMD="cross build --release --target $TARGET"
+
+if [ "$FEATURES" != "" ]; then
+    # Remove the -f prefix if present
+    CLEAN_FEATURES=$(echo "$FEATURES" | sed 's/^-f //')
+    BUILD_CMD="$BUILD_CMD --features $CLEAN_FEATURES"
+fi
+
+if [ "$CARGO_FLAGS" != "" ]; then
+    BUILD_CMD="$BUILD_CMD $CARGO_FLAGS"
+fi
+
+echo "Executing: $BUILD_CMD"
+cd ../app_cyborgai_cli
+eval $BUILD_CMD
+
+# Find the built binary
+BINARY_NAME="cyborgai_cli"
+if [[ "$TARGET" == *"-windows-"* ]]; then
+    BINARY_NAME="cyborgai_cli.exe"
+fi
+
+BINARY_PATH="target/$TARGET/release/$BINARY_NAME"
+
+if [ ! -f "$BINARY_PATH" ]; then
+    echo "Error: Binary not found at $BINARY_PATH"
+    exit 1
+fi
+
+# Copy to release directory
+RELEASE_NAME="cyborgai_cli-$TARGET"
+if [[ "$TARGET" == *"-windows-"* ]]; then
+    RELEASE_NAME="$RELEASE_NAME.exe"
+fi
+
+cp "$BINARY_PATH" "../build/release/$RELEASE_NAME"
+
+# Compress if requested
+if [ "$COMPRESS" = "true" ]; then
+    echo "Compressing binary with UPX..."
+    upx --best "../build/release/$RELEASE_NAME" || echo "UPX compression failed, continuing..."
+fi
+
+echo "Build completed: release/$RELEASE_NAME"
