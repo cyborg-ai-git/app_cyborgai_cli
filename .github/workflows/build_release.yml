@@ -28,32 +28,9 @@ jobs:
       tag: ${{ steps.detect.outputs.tag }}
       should_release: ${{ steps.detect.outputs.should_release }}
     steps:
-    
-      - name: Configure Git for private repositories
-        run: |
-          echo "a ${{secrets.ACTION_PAT}}"
-          echo "b ${{ secrets.ACTION_USER }}"
-          echo "c ${{ secrets.ACTION_USER_EMAIL }}"
-          # Configure Git authentication for private repos using PAT
-          git config --global "url.https://x-access-token:${{secrets.ACTION_PAT}}@github.com.insteadof" "https://github.com"
-          
-          # Set git user (using github-actions bot)
-          git config --global user.name "${{ secrets.ACTION_USER }}"
-          git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
-        
-          # Debug: Check git config
-          echo "Git config:"
-          git config --global --list
-          
-          # Test authentication with more detail
-          echo "Testing Git authentication..."
-          GIT_CURL_VERBOSE=1 git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD 2>&1 || {
-            echo "Failed to access repository. Possible causes:"
-            echo "1. PAT doesn't have 'repo' scope"
-            echo "2. PAT owner doesn't have access to cyborg-ai-git/evo_core_app_cli"
-            echo "3. Repository name is incorrect"
-            echo "4. PAT is expired"
-          }
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
       - name: Detect release tag
         id: detect
@@ -138,19 +115,23 @@ jobs:
       - name: Install LLVM and Clang
         run: sudo apt install -y clang
 
-      - uses: actions/checkout@v4  # v5 doesn't exist yet as of my knowledge
+      - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # This is automatically provided
-      
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Configure Git for private repositories
         run: |
-          # Configure Git authentication for private repos
+          # Configure Git authentication
           git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "git@github.com:"
-    
-          # Set git user (using github-actions bot)
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          
+          # Configure Cargo to use git CLI for authentication
+          mkdir -p ~/.cargo
+          cat > ~/.cargo/config.toml << EOF
+          [net]
+          git-fetch-with-cli = true
+          EOF
           
           # Test Git authentication
           echo "Testing Git authentication..."
@@ -211,17 +192,20 @@ jobs:
           - x86_64-apple-darwin
           - aarch64-apple-darwin
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure Git for private repositories
         run: |
-          echo "secrets:: /${{ secrets }}"
+          echo "secret....: ${{ secrets }"
           # Configure Git authentication
-          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf https://github.com
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
+          git config --global "url.https://x-access-token:${{secrets.ACTION_PAT}}@github.com.insteadof" "https://github.com"
+          
+          # Set git user (using github-actions bot)
+          git config --global user.name "${{ secrets.ACTION_USER }}"
+          git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
+          
           
           # Test Git authentication
           echo "Testing Git authentication..."
@@ -275,9 +259,16 @@ jobs:
       - name: Configure Git for private repositories
         run: |
           # Configure Git authentication
-          git config --global url."https://${{ secrets.GIT_CREDENTIALS }}@github.com".insteadOf https://github.com
-          #git config --global user.email "action@github.com"
-          #git config --global user.name "GitHub Action"
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          
+          # Configure Cargo to use git CLI for authentication
+          if (-not (Test-Path ~/.cargo)) { New-Item -ItemType Directory -Force -Path ~/.cargo }
+          @"
+          [net]
+          git-fetch-with-cli = true
+          "@ | Out-File -FilePath ~/.cargo/config.toml -Encoding utf8
           
           # Test Git authentication
           Write-Host "Testing Git authentication..."
