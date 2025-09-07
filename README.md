@@ -4,11 +4,17 @@
 
 <img src="https://avatars.githubusercontent.com/u/129898917?v=4" alt="cyborgai" width="256" height="256">
 
+---
+
 # EVO CyborgAI CLI
+
+---
 
 > ⚠️ **BETA DISCLAIMER**: CyborgAI CLI is currently in beta version. Use at your own risk. Features may be unstable and subject to change without notice. This software is provided "as is" without warranty of any kind.
 
 #### CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International          
+
+---
 
 ## What This App Does
 
@@ -23,6 +29,8 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 - **Git and Github Integration** for repository management
 - **File Explorer** for project navigation
 
+---
+
 ## 📊 Development Progress
 
 | Feature                                            | Progress |
@@ -36,11 +44,15 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 | **Settings Tab**: Application configuration        | 58%      |
 | **Help**: Keyboard shortcuts and usage guide       | 63%      |
 
+---
+
 ## 🎥 Demo Video
 
 [![CyborgAI CLI Demo](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
 
 *Click the image above to watch the demo video on YouTube*
+
+---
 
 ## Installation
 
@@ -56,6 +68,43 @@ Rust is required to build and run the application. See detailed installation ins
 chmod +x scripts/install.sh
 ./scripts/install.sh
 ```
+
+## Additional Requirements
+
+| Tool | Description | Documentation |
+|------|-------------|---------------|
+| **GitHub CLI (gh)** | Required for repository and issue management scripts | 📖 **[Install GitHub CLI Guide](install_gh.md)** |
+| **Git Flow** | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
+| **PlantUML** | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
+| **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](install_pandoc.md)** |
+
+**Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
+
+## Future Development
+
+We are actively working on **CyborgAI Dev** - a comprehensive Rust application that will provide a complete development environment and eliminate the need for external dependencies like PlantUML and Pandoc. This next-generation tool will handle the entire development process from project creation to deployment.
+
+🚀 **Stay tuned for updates**: [CyborgAI Dev Repository](https://github.com/cyborg-ai-git/app_cyborgai_dev)
+
+The new application will include:
+
+### 🤖 AI-Powered Automation
+- **Automatic Documentation Generation**: Full detailed documentation created automatically with AI support and UML diagrams
+- **Automatic Test Generation**: Comprehensive test suites generated automatically based on code analysis
+- **Automatic Benchmark Generation**: Performance benchmarks created automatically for optimization insights
+- **AI-Supported API Generation**: API generated automatically with AI assistance
+- **AI-Supported Entity Generation**: Entities created automatically
+
+### 🛠️ Enhanced Development Tools
+- **Integrated Documentation Generation**: Built-in tools for creating and maintaining project documentation
+- **Built-in Diagram Creation**: Native UML and architectural diagram generation without external dependencies
+- **Native Document Export**: Export capabilities to PDF, DOC, ODT formats without requiring Pandoc
+- **Enhanced Project Management**: Advanced project scaffolding, dependency management, and workflow automation
+- **Streamlined Development Workflows**: Optimized Git Flow integration with intelligent branch management and automated CI/CD pipelines
+
+
+---
+
 
 ## How to Run
 
@@ -78,6 +127,8 @@ cargo run --release
 chmod +x scripts/run.sh
 ./scripts/run.sh
 ```
+
+---
 
 ## Project Structure
 
@@ -117,6 +168,8 @@ app_cyborgai_cli/
 ├── .gitignore                 # Git ignore rules
 └── README.md                  # This file
 ```
+
+---
 
 ## Scripts Folder Explanation
 
@@ -215,39 +268,7 @@ This repository uses **Git Flow** branching strategy for organized development:
 
 ```
 
-## Additional Requirements
-
-| Tool | Description | Documentation |
-|------|-------------|---------------|
-| **GitHub CLI (gh)** | Required for repository and issue management scripts | 📖 **[Install GitHub CLI Guide](install_gh.md)** |
-| **Git Flow** | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
-| **PlantUML** | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
-| **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](install_pandoc.md)** |
-
-**Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
-
-## Future Development
-
-We are actively working on **CyborgAI Dev** - a comprehensive Rust application that will provide a complete development environment and eliminate the need for external dependencies like PlantUML and Pandoc. This next-generation tool will handle the entire development process from project creation to deployment.
-
-🚀 **Stay tuned for updates**: [CyborgAI Dev Repository](https://github.com/cyborg-ai-git/app_cyborgai_dev)
-
-The new application will include:
-
-### 🤖 AI-Powered Automation
-- **Automatic Documentation Generation**: Full detailed documentation created automatically with AI support and UML diagrams
-- **Automatic Test Generation**: Comprehensive test suites generated automatically based on code analysis
-- **Automatic Benchmark Generation**: Performance benchmarks created automatically for optimization insights
-- **AI-Supported API Generation**: API generated automatically with AI assistance
-- **AI-Supported Entity Generation**: Entities created automatically
-
-### 🛠️ Enhanced Development Tools
-- **Integrated Documentation Generation**: Built-in tools for creating and maintaining project documentation
-- **Built-in Diagram Creation**: Native UML and architectural diagram generation without external dependencies
-- **Native Document Export**: Export capabilities to PDF, DOC, ODT formats without requiring Pandoc
-- **Enhanced Project Management**: Advanced project scaffolding, dependency management, and workflow automation
-- **Streamlined Development Workflows**: Optimized Git Flow integration with intelligent branch management and automated CI/CD pipelines
-
+---
 
 ## How to Contribute
 
@@ -309,13 +330,21 @@ Use our automated scripts for streamlined contributions:
 - Use the provided GitHub templates when creating issues and pull requests
 - Follow the Code of Conduct outlined in `.github/CODE_OF_CONDUCT.md`
 
+---
+
 ## Documentation
 **[EVO Framework Documentation](https://github.com/cyborg-ai-git/doc_evo.git)**
 
+---
+
 ## License
 **[CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](LICENSE.txt)**
+
+---
 
 ## Links
 - [YouTube Demo](https://www.youtube.com/watch?v=OnZAlOs09p4)
 - [CyborgAI Website](https://cyborgai.fly.dev)
 - [GitHub Organization](https://github.com/cyborg-ai-git)
+-
+---
