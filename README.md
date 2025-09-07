@@ -297,10 +297,35 @@ This repository uses **Git Flow** branching strategy for organized development:
 # Regular commits
 ./scripts/run_git_push.sh "commit message"
 
+# Create release (creates PR from develop to master)
+./scripts/run_git_push_release.sh "Release message" release
+
 # Finish feature work
 ./scripts/run_issue_finish.sh 123
-
 ```
+
+### Release Process
+Our release process uses a pull request workflow for better control and review:
+
+1. **Create Release PR**: Run `./scripts/run_git_push_release.sh "Release v1.0.0" release`
+   - Creates a tag on the develop branch
+   - Opens a pull request from develop to master
+   - Includes detailed release information
+
+2. **Review & Approve**: Team reviews the pull request for:
+   - Code quality and completeness
+   - Version number accuracy
+   - Release notes and documentation
+
+3. **Automated Build**: When the PR is merged to master:
+   - GitHub Actions automatically detects the release tag
+   - Builds cross-platform binaries (Linux, Windows, macOS)
+   - Creates a GitHub release with all binaries attached
+
+4. **Supported Platforms**: Automatic builds for:
+   - **Linux**: x86_64, ARM variants, MIPS variants (musl and gnu)
+   - **Windows**: x86_64
+   - **macOS**: x86_64 and ARM64 (Apple Silicon)
 
 ---
 
