@@ -28,10 +28,7 @@ jobs:
       tag: ${{ steps.detect.outputs.tag }}
       should_release: ${{ steps.detect.outputs.should_release }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.ACTION_PAT }}  # Use PAT instead of GITHUB_TOKEN
-      
+    
       - name: Configure Git for private repositories
         run: |
           # Configure Git authentication for private repos using PAT
