@@ -1,8 +1,9 @@
+<img src="https://avatars.githubusercontent.com/u/129898917?v=4" alt="cyborgai" width="256" height="256">
 
+---
 
 ## [CyborgAI](https://github.com/cyborg-ai-git) (https://github.com/cyborg-ai-git)
 
-<img src="https://avatars.githubusercontent.com/u/129898917?v=4" alt="cyborgai" width="256" height="256">
 
 ---
 
@@ -16,13 +17,25 @@
 
 ---
 
+---
+
+>  ### [Dependencies](https://github.com/cyborg-ai-git/doc_whitepaper.git):
+> 
+> [evo_framework](https://github.com/cyborg-ai-git/evo_framework.git) -> min level: **1 (Red pill)**
+> 
+> [evo_core_app_cli](https://github.com/cyborg-ai-git/evo_core_app_cli.git) -> min level: **7 (Trinity)**
+
+> #### If your peer ID is not allowed to access it, use the latest precompiled binary instead. [Releases]( https://github.com/cyborg-ai-git/app_cyborgai_cli/releases/)
+
+---
+
 ## What This App Does
 
 EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust and the EVO Framework. It provides:
 
 - **Interactive AI Chat Interface** with persistent conversation history
 - **Multi-Panel Layout** featuring Chat, File Explorer, Git operations, Settings, and Help panels
-- **Full Mouse Support** with click navigation, scrolling, and modern UI interactions
+- **Full Mouse Support** with click navigation, scrolling, and modern UI interactions📖 
 - **Cross-Platform Compatibility** for macOS, Linux, and Windows
 - **Session Management** with automatic saving and restoration
 - **Built-in Help System** with comprehensive keyboard shortcuts
@@ -69,6 +82,28 @@ chmod +x scripts/install.sh
 ./scripts/install.sh
 ```
 
+---
+
+##  Requirements
+| Tool              | Description              | Repository                                                 |
+|-------------------|--------------------------|------------------------------------------------------------|
+| **CyborgAI Peer** | App peer for Ai and api  | 📡 **https://github.com/cyborg-ai-git/doc_whitepaper.git** |
+
+---
+
+
+| Tool                | Description                                               | Documentation                                        |
+|---------------------|-----------------------------------------------------------|------------------------------------------------------|
+| **GitHub CLI (gh)** | Required for repository and issue management scripts      | 📖 **[Install GitHub CLI Guide](install_gh.md)**     |
+| **Git Flow**        | Used for organized development workflow                   | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
+| **PlantUML**        | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
+| **Pandoc**          | Required for document export to PDF, DOC, ODT formats     | 📖 **[Install Pandoc Guide](install_pandoc.md)**     |
+
+**Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
+
+---
+
+
 ## Additional Requirements
 
 | Tool | Description | Documentation |
@@ -79,6 +114,8 @@ chmod +x scripts/install.sh
 | **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](install_pandoc.md)** |
 
 **Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
+
+---
 
 ## Future Development
 
@@ -102,9 +139,7 @@ The new application will include:
 - **Enhanced Project Management**: Advanced project scaffolding, dependency management, and workflow automation
 - **Streamlined Development Workflows**: Optimized Git Flow integration with intelligent branch management and automated CI/CD pipelines
 
-
 ---
-
 
 ## How to Run
 
@@ -225,15 +260,14 @@ The `scripts/` folder contains automation scripts for development workflow:
 
 - **`run_publish.sh`**: Publishes the crate to crates.io using `cargo publish`
 
-## Usage
+---
 
-1. **Start the Application**: Run using `cargo run` or `./run.sh`
-2. **Logo Splash**: Wait 3 seconds or press Enter/Esc to skip
-3. **Navigation**: 
+## Usage
+1. **Navigation**: 
    - Use mouse clicks to switch between panels
    - Use keyboard shortcuts (press `?` for help)
    - Type messages in chat and press Enter to send
-4. **Panels**:
+2. **Panels**:
    - **Chat**: AI conversation interface
    - **File**: File explorer for project navigation
    - **Git**: Git repository operations
