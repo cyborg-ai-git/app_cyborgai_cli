@@ -30,14 +30,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_PAT }}  # Use PAT instead of GITHUB_TOKEN
+          token: ${{ secrets.ACTION_PAT }}  # Use PAT instead of GITHUB_TOKEN
       
       - name: Configure Git for private repositories
         run: |
           # Configure Git authentication for private repos using PAT
-          git config --global url."https://${{ secrets.GH_PAT }}@github.com/".insteadOf "https://github.com/"
-          git config --global url."https://${{ secrets.GH_PAT }}@github.com/".insteadOf "git@github.com:"
-          git config --global url."https://${{ secrets.GH_PAT }}@github.com/".insteadOf "ssh://git@github.com/"
+          git config --global url."https://${{ secrets.ACTION_PAT }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://${{ secrets.ACTION_PAT }}@github.com/".insteadOf "git@github.com:"
+          git config --global url."https://${{ secrets.ACTION_PAT }}@github.com/".insteadOf "ssh://git@github.com/"
           
           # Set git user (using github-actions bot)
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
