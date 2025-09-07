@@ -41,7 +41,7 @@ mkdir -p release
 # Build command
 BUILD_CMD="cargo build --release --target $TARGET"
 
-if [ "$FEATURES" != "" ] && [ "$FEATURES" != "full" ]; then
+if [ "$FEATURES" != "" ] && [ "$FEATURES" != "full" ] && [ "$FEATURES" != "default" ]; then
     BUILD_CMD="$BUILD_CMD --features $FEATURES"
 fi
 

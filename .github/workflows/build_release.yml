@@ -152,7 +152,8 @@ jobs:
         run: |
           compile_target=${{ matrix.platform.target }}
 
-          compile_features="-f full"
+          # No features needed - use default features
+          compile_features=""
 
           if [[ "$compile_target" == *"-windows-"* ]]; then
             compile_features="$compile_features -f winservice"
@@ -181,7 +182,6 @@ jobs:
     if: needs.detect-release.outputs.should_release == 'true'
     runs-on: ${{ matrix.os }}
     env:
-      BUILD_EXTRA_FEATURES: "full"
       RUST_BACKTRACE: full
     strategy:
       fail-fast: false
