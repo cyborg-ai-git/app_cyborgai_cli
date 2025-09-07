@@ -28,13 +28,24 @@ jobs:
       tag: ${{ steps.detect.outputs.tag }}
       should_release: ${{ steps.detect.outputs.should_release }}
     steps:
-      - uses: actions/checkout@v4
+     
+      - uses: actions/checkout@v4  # v5 doesn't exist yet as of my knowledge
         with:
-          fetch-depth: 0
-
+          token: ${{ secrets.GITHUB_TOKEN }}  # This is automatically provided
+      
       - name: Configure Git for private repositories
         run: |
-          echo "secrets:: /${{ secrets }}"
+          # Configure Git authentication for private repos
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "git@github.com:"
+          
+          # Set git user (using github-actions bot)
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+          # Test Git authentication
+          echo "Testing Git authentication..."
+          git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD || echo "Warning: Could not access private repository"
       
       - name: Detect release tag
         id: detect
