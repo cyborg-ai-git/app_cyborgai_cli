@@ -50,7 +50,12 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 Rust is required to build and run the application. See detailed installation instructions:
 📖 **[Install Rust Guide](install_rust.md)**
 
-
+#### Install rust + audit for linux and macOS for windows use 
+```bash
+# Or using the development script
+chmod +x scripts/install.sh
+./scripts/install.sh
+```
 
 ## How to Run
 
@@ -86,7 +91,8 @@ app_cyborgai_cli/
 │   ├── tests/                    # Integration tests
 │   │   └── test_app_cyborgai_cli.rs
 │   └── Cargo.toml               # Package configuration
-├── scripts/                      # Development and automation scripts
+├── scripts/                     # Development and automation scripts
+│   ├── install.sh               # Install rust + audit 
 │   ├── run.sh                   # Run application in release mode
 │   ├── run_dev.sh               # Run application in development mode
 │   ├── run_benches.sh           # Run performance benchmarks
@@ -117,13 +123,14 @@ app_cyborgai_cli/
 The `scripts/` folder contains automation scripts for development workflow:
 
 ### Build & Development Scripts
-- **`run.sh`**: Runs the application in release mode using `cargo run --release` for optimal performance
-- **`run_dev.sh`**: Runs the application in development mode using `cargo run` for faster compilation
-- **`run_cargo_clean.sh`**: Cleans all build artifacts and target directories using `cargo clean`
+- **`install.sh`**: Runs the application in release mode for optimal performance
+- **`run.sh`**: Runs the application in release mode for optimal performance
+- **`run_dev.sh`**: Runs the application in development mode using for faster compilation
+- **`run_cargo_clean.sh`**: Cleans all build artifacts and target directories
 - **`run_cargo_update.sh`**: Updates all Cargo dependencies to their latest compatible versions
-- **`run_format_code.sh`**: Formats code with `cargo fmt` and runs linting with `cargo clippy`
-- **`run_benches.sh`**: Runs performance benchmarks using `cargo bench` with error-level logging
-- **`run_tests.sh`**: Executes the full test suite using `cargo test --release` with info-level logging
+- **`run_format_code.sh`**: Formats code  and runs linting
+- **`run_benches.sh`**: Runs performance benchmarks 
+- **`run_tests.sh`**: Executes the full test suite with info-level debugging
 
 ### Git Flow & Repository Management
 - **`run_create_github_repository.sh`**: 
