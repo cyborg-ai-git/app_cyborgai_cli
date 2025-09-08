@@ -87,7 +87,7 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 Rust is required to build and run the application. See detailed installation instructions:
 📖 **[Install Rust Guide](install_rust.md)**
 
-#### Install rust + audit for linux and macOS for windows use 
+#### Install rust + audit for linux and macOS for windows use [Wsl](https://ubuntu.com/desktop/wsl)
 ```bash
 # Or using the development script
 chmod +x scripts/install.sh
@@ -247,7 +247,6 @@ The `scripts/` folder contains automation scripts for development workflow:
 
 - **`run_publish.sh`**: Publishes the crate to crates.io using `cargo publish`
 
-
 ---
 
 ## Development Workflow
@@ -262,30 +261,12 @@ This repository uses **Git Flow** branching strategy for organized development:
 
 **Note on Hotfix Branches**: We do not use `hotfix/*` branches in our CyborgAI standard workflow. All code must be fully tested and verified before deployment. We believe that good code takes time, and proper testing through the standard feature → develop → release → master flow ensures quality and stability.
 
-### Workflow Commands
-```bash
-# Start new feature
-./scripts/run_issue_create.sh "Issue/Feature description"
-
-# Work on existing issue  => example: https://github.com/cyborg-ai-git/app_cyborgai_cli/issues/123 
-./scripts/run_issue_start.sh 123
-
-# Regular commits
-./scripts/run_git_push.sh "commit message"
-
-# Create release (creates PR from develop to master)
-./scripts/run_git_push_release.sh "Release message" release
-
-# Finish feature work
-./scripts/run_issue_finish.sh 123
-```
-
 ---
 
 ### Release Process
 Our release process uses a pull request workflow for better control and review:
 
-1. **Create Release PR**: Run `./scripts/run_git_push_release.sh "Release v1.0.0" release`
+1. **Create Release PR**: Run `./scripts_release/run_git_push_release.sh "Release description" release`
    - Creates a tag on the develop branch
    - Opens a pull request from develop to master
    - Includes detailed release information
@@ -297,7 +278,7 @@ Our release process uses a pull request workflow for better control and review:
 
 3. **Automated Build**: When the PR is merged to master:
    - GitHub Actions automatically detects the release tag
-   - Builds cross-platform binaries (Linux, Windows, macOS)
+   - Builds cross-platform binaries (Linux, macOS, Windows ([Wsl](https://ubuntu.com/desktop/wsl)))
    - Creates a GitHub release with all binaries attached
 
 4. **Supported Platforms**: Automatic builds for:
@@ -375,7 +356,7 @@ This repository includes comprehensive GitHub templates and community standards 
 
 ## Documentation
 **[EVO Framework Documentation](https://github.com/cyborg-ai-git/doc_evo.git)**
-
+**[CyborgAI_cli Documentation](documentation/doc/cyborgai_cli/index.html)**
 ---
 
 ## License
