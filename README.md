@@ -13,9 +13,7 @@
 
 > ⚠️ **BETA DISCLAIMER**: CyborgAI CLI is currently in beta version. Use at your own risk. Features may be unstable and subject to change without notice. This software is provided "as is" without warranty of any kind.
 
-#### CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International          
-
----
+> #### CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International          
 
 ---
 
@@ -43,7 +41,27 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 - **File Explorer** for project navigation
 
 ---
+## 🎥 Demo Video
 
+[![CyborgAI CLI Demo](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
+
+*Click the image above to watch the demo video on YouTube*
+
+---
+
+## Usage
+1. **Navigation**:
+    - Use mouse clicks to switch between panels
+    - Use keyboard shortcuts (press `?` for help)
+    - Type messages in chat and press Enter to send
+2. **Panels**:
+    - **Chat**: AI conversation interface
+    - **File**: File explorer for project navigation
+    - **Git**: Git repository operations
+    - **Settings**: Application configuration
+    - **Help**: Keyboard shortcuts and usage guide
+
+---
 ## 📊 Development Progress
 
 | Feature                                            | Progress |
@@ -59,13 +77,7 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 
 ---
 
-## 🎥 Demo Video
 
-[![CyborgAI CLI Demo](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
-
-*Click the image above to watch the demo video on YouTube*
-
----
 
 ## Installation
 
@@ -103,7 +115,6 @@ chmod +x scripts/install.sh
 
 ---
 
-
 ## Additional Requirements
 
 | Tool | Description | Documentation |
@@ -114,30 +125,6 @@ chmod +x scripts/install.sh
 | **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](install_pandoc.md)** |
 
 **Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
-
----
-
-## Future Development
-
-We are actively working on **CyborgAI Dev** - a comprehensive Rust application that will provide a complete development environment and eliminate the need for external dependencies like PlantUML and Pandoc. This next-generation tool will handle the entire development process from project creation to deployment.
-
-🚀 **Stay tuned for updates**: [CyborgAI Dev Repository](https://github.com/cyborg-ai-git/app_cyborgai_dev)
-
-The new application will include:
-
-### 🤖 AI-Powered Automation
-- **Automatic Documentation Generation**: Full detailed documentation created automatically with AI support and UML diagrams
-- **Automatic Test Generation**: Comprehensive test suites generated automatically based on code analysis
-- **Automatic Benchmark Generation**: Performance benchmarks created automatically for optimization insights
-- **AI-Supported API Generation**: API generated automatically with AI assistance
-- **AI-Supported Entity Generation**: Entities created automatically
-
-### 🛠️ Enhanced Development Tools
-- **Integrated Documentation Generation**: Built-in tools for creating and maintaining project documentation
-- **Built-in Diagram Creation**: Native UML and architectural diagram generation without external dependencies
-- **Native Document Export**: Export capabilities to PDF, DOC, ODT formats without requiring Pandoc
-- **Enhanced Project Management**: Advanced project scaffolding, dependency management, and workflow automation
-- **Streamlined Development Workflows**: Optimized Git Flow integration with intelligent branch management and automated CI/CD pipelines
 
 ---
 
@@ -260,19 +247,8 @@ The `scripts/` folder contains automation scripts for development workflow:
 
 - **`run_publish.sh`**: Publishes the crate to crates.io using `cargo publish`
 
----
 
-## Usage
-1. **Navigation**: 
-   - Use mouse clicks to switch between panels
-   - Use keyboard shortcuts (press `?` for help)
-   - Type messages in chat and press Enter to send
-2. **Panels**:
-   - **Chat**: AI conversation interface
-   - **File**: File explorer for project navigation
-   - **Git**: Git repository operations
-   - **Settings**: Application configuration
-   - **Help**: Keyboard shortcuts and usage guide
+---
 
 ## Development Workflow
 
@@ -303,6 +279,8 @@ This repository uses **Git Flow** branching strategy for organized development:
 # Finish feature work
 ./scripts/run_issue_finish.sh 123
 ```
+
+---
 
 ### Release Process
 Our release process uses a pull request workflow for better control and review:
@@ -335,34 +313,12 @@ Our release process uses a pull request workflow for better control and review:
 
 1. **Fork the Repository**: Create your own fork of the project
 2. **Create an Issue**: Use our automated script to create issues and Git Flow feature branches:
-   ```bash
-   ./scripts/run_issue_create.sh "Your feature or bug description" "Detailed description"
-   ```
 3. **Start Feature Branch**: Use Git Flow to start working on the issue:
-   ```bash
-   git flow feature start your-feature-name
-   # or use our automation script
-   ./scripts/run_issue_start.sh 123
-   ```
 4. **Follow EVO Framework**: Adhere to naming conventions and architecture patterns
 5. **Write Tests**: Include appropriate test coverage
 6. **Submit Pull Request**: Use Git Flow to finish and target the `develop` branch:
-   ```bash
-   git flow feature finish your-feature-name
-   # or use our automation script
-   ./scripts/run_issue_finish.sh 123
-   ```
 7. **Code Review**: Participate in the review process
 
-### 📋 GitHub Templates & Community Standards
-
-This repository includes comprehensive GitHub templates and community standards located in the `.github/` directory:
-
-- **`.github/CODE_OF_CONDUCT.md`**: Community guidelines and expected behavior
-- **`.github/ISSUE_TEMPLATE/`**: Standardized issue templates for bugs, features, and documentation
-- **`.github/PULL_REQUEST_TEMPLATE.md`**: Pull request template with checklist
-- **`.github/CONTRIBUTING.md`**: Detailed contribution guidelines
-- **`.github/SECURITY.md`**: Security policy and vulnerability reporting
 
 ### 🛠️ Automated Contribution Workflow
 
@@ -391,6 +347,17 @@ Use our automated scripts for streamlined contributions:
 # Finish your work and create a pull request
 ./scripts/run_issue_finish.sh 123
 ```
+---
+
+### 📋 GitHub Templates & Community Standards
+
+This repository includes comprehensive GitHub templates and community standards located in the `.github/` directory:
+
+- **`.github/CODE_OF_CONDUCT.md`**: Community guidelines and expected behavior
+- **`.github/ISSUE_TEMPLATE/`**: Standardized issue templates for bugs, features, and documentation
+- **`.github/PULL_REQUEST_TEMPLATE.md`**: Pull request template with checklist
+- **`.github/CONTRIBUTING.md`**: Detailed contribution guidelines
+- **`.github/SECURITY.md`**: Security policy and vulnerability reporting
 
 ---
 
@@ -421,4 +388,27 @@ Use our automated scripts for streamlined contributions:
 - [CyborgAI Website](https://cyborgai.fly.dev)
 - [GitHub Organization](https://github.com/cyborg-ai-git)
 -
+---
+## Future Development
+
+We are actively working on **CyborgAI Dev** - a comprehensive Rust application that will provide a complete development environment and eliminate the need for external dependencies like PlantUML and Pandoc. This next-generation tool will handle the entire development process from project creation to deployment.
+
+🚀 **Stay tuned for updates**: [CyborgAI Dev Repository](https://github.com/cyborg-ai-git/app_cyborgai_dev)
+
+The new application will include:
+
+### 🤖 AI-Powered Automation
+- **Automatic Documentation Generation**: Full detailed documentation created automatically with AI support and UML diagrams
+- **Automatic Test Generation**: Comprehensive test suites generated automatically based on code analysis
+- **Automatic Benchmark Generation**: Performance benchmarks created automatically for optimization insights
+- **AI-Supported API Generation**: API generated automatically with AI assistance
+- **AI-Supported Entity Generation**: Entities created automatically
+
+### 🛠️ Enhanced Development Tools
+- **Integrated Documentation Generation**: Built-in tools for creating and maintaining project documentation
+- **Built-in Diagram Creation**: Native UML and architectural diagram generation without external dependencies
+- **Native Document Export**: Export capabilities to PDF, DOC, ODT formats without requiring Pandoc
+- **Enhanced Project Management**: Advanced project scaffolding, dependency management, and workflow automation
+- **Streamlined Development Workflows**: Optimized Git Flow integration with intelligent branch management and automated CI/CD pipelines
+
 ---

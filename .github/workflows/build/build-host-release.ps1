@@ -14,19 +14,33 @@ Write-Host "Building for Windows with features: $Features"
 # Create release directory
 New-Item -ItemType Directory -Force -Path "release" | Out-Null
 
-# Build command
-$BuildCmd = "cargo build --release"
+# Build command - use zigbuild for cross-compilation
+$BuildCmd = "cargo zigbuild --release --target x86_64-pc-windows-msvc"
 
-if ($Features -ne "" -and $Features -ne "full") {
+if ($Features -ne "" -and $Features -ne "full" -and $Features -ne "default") {
     $BuildCmd += " --features $Features"
 }
 
 Write-Host "Executing: $BuildCmd"
-Set-Location "../app_cyborgai_cli"
+
+# Determine if we're in the build directory or root directory
+if (Test-Path "app_cyborgai_cli") {
+    # We're in the root directory
+    Set-Location "app_cyborgai_cli"
+    $BuildDir = "../build"
+} elseif (Test-Path "../app_cyborgai_cli") {
+    # We're in the build directory
+    Set-Location "../app_cyborgai_cli"
+    $BuildDir = "../build"
+} else {
+    Write-Error "Cannot find app_cyborgai_cli directory"
+    exit 1
+}
+
 Invoke-Expression $BuildCmd
 
 # Find the built binary
-$BinaryPath = "target/release/cyborgai_cli.exe"
+$BinaryPath = "target/x86_64-pc-windows-msvc/release/cyborgai_cli.exe"
 
 if (-not (Test-Path $BinaryPath)) {
     Write-Error "Binary not found at $BinaryPath"
@@ -35,6 +49,7 @@ if (-not (Test-Path $BinaryPath)) {
 
 # Copy to release directory
 $ReleaseName = "cyborgai_cli-x86_64-pc-windows-msvc.exe"
-Copy-Item $BinaryPath "../build/release/$ReleaseName"
+New-Item -ItemType Directory -Force -Path "$BuildDir/release" | Out-Null
+Copy-Item $BinaryPath "$BuildDir/release/$ReleaseName"
 
 Write-Host "Build completed: release/$ReleaseName"

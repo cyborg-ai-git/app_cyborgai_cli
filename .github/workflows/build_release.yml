@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Detect release tag
         id: detect
         run: |
@@ -51,7 +51,7 @@ jobs:
               echo "should_release=false" >> $GITHUB_OUTPUT
             fi
           fi
-          
+
       - name: Create GitHub Release
         if: steps.detect.outputs.should_release == 'true'
         env:
@@ -95,7 +95,7 @@ jobs:
               exit 0
             fi
           fi
-  build-release-cross:
+  build-release-linux:
     needs: detect-release
     if: needs.detect-release.outputs.should_release == 'true'
     runs-on: ubuntu-latest
@@ -137,15 +137,23 @@ jobs:
           rustup default nightly-2025-06-20
           rustup override set nightly-2025-06-20
 
-      - name: Install cross
-        run: cargo install cross --git https://github.com/cross-rs/cross
+      - name: Install Zig
+        run: |
+          wget -q https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz
+          tar -xf zig-linux-x86_64-0.13.0.tar.xz
+          sudo mv zig-linux-x86_64-0.13.0 /opt/zig
+          echo "/opt/zig" >> $GITHUB_PATH
+
+      - name: Install zigbuild
+        run: cargo install cargo-zigbuild
 
       - name: Build ${{ matrix.platform.target }}
         timeout-minutes: 120
         run: |
           compile_target=${{ matrix.platform.target }}
 
-          compile_features="-f full"
+          # No features needed - use default features
+          compile_features=""
 
           if [[ "$compile_target" == *"-windows-"* ]]; then
             compile_features="$compile_features -f winservice"
@@ -154,8 +162,14 @@ jobs:
           # Always use nightly since we're using nightly-2025-06-20
           compile_nightly="-n"
 
-          cd build
-          ./build-release -t ${{ matrix.platform.target }} $compile_features $compile_nightly
+          ./build/build-release -t ${{ matrix.platform.target }} $compile_features $compile_nightly
+
+      - name: List build artifacts
+        run: |
+          echo "Contents of build directory:"
+          ls -la build/
+          echo "Contents of build/release directory:"
+          ls -la build/release/ || echo "build/release directory does not exist"
 
       - name: Upload Github Assets
         uses: softprops/action-gh-release@v2
@@ -174,7 +188,6 @@ jobs:
     if: needs.detect-release.outputs.should_release == 'true'
     runs-on: ${{ matrix.os }}
     env:
-      BUILD_EXTRA_FEATURES: "full"
       RUST_BACKTRACE: full
     strategy:
       fail-fast: false
@@ -232,57 +245,62 @@ jobs:
           fail_on_unmatched_files: true
           generate_release_notes: true
 
-  build-release-windows:
-    needs: detect-release
-    if: needs.detect-release.outputs.should_release == 'true'
-    runs-on: windows-latest
-    env:
-      RUSTFLAGS: "-C target-feature=+crt-static"
-      RUST_BACKTRACE: full
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ilammy/setup-nasm@v1
-
-      - name: Configure Git for private repositories
-        run: |
-          # Configure Git authentication
-          git config --global url."https://x-access-token:${{ secrets.ACTION_PAT }}@github.com/".insteadOf "https://github.com/"
-          git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
-          git config --global user.name "${{ secrets.ACTION_USER }}"
-          
-          # Configure Cargo to use git CLI for authentication
-          if (-not (Test-Path ~/.cargo)) { New-Item -ItemType Directory -Force -Path ~/.cargo }
-          @"
-          [net]
-          git-fetch-with-cli = true
-          "@ | Out-File -FilePath ~/.cargo/config.toml -Encoding utf8
-          
-          # Test Git authentication
-          Write-Host "Testing Git authentication..."
-          try { git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD } catch { Write-Host "Warning: Could not access private repository" }
-        shell: pwsh
-
-      - name: Install Rust
-        run: |
-          rustup set profile minimal
-          rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
-          rustup default nightly-2025-06-20
-          rustup override set nightly-2025-06-20
-
-      - name: Build release
-        run: |
-          pwsh ./build/build-host-release.ps1 "full winservice"
-
-      - name: Upload Github Assets
-        uses: softprops/action-gh-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          files: build/release/*
-          prerelease: ${{ contains(needs.detect-release.outputs.tag, '-') }}
-          tag_name: ${{ needs.detect-release.outputs.tag }}
-          draft: false
-          fail_on_unmatched_files: true
-          generate_release_notes: true
+  # Windows build disabled - Windows users can use WSL (Windows Subsystem for Linux)
+  # See README.md for installation instructions
+  # build-release-windows:
+  #   needs: detect-release
+  #   if: needs.detect-release.outputs.should_release == 'true'
+  #   runs-on: windows-latest
+  #   env:
+  #     RUSTFLAGS: "-C target-feature=+crt-static"
+  #     RUST_BACKTRACE: full
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #     - uses: ilammy/setup-nasm@v1
+  #
+  #     - name: Configure Git for private repositories
+  #       run: |
+  #         # Configure Git authentication
+  #         git config --global url."https://x-access-token:${{ secrets.ACTION_PAT }}@github.com/".insteadOf "https://github.com/"
+  #         git config --global user.email "${{ secrets.ACTION_USER_EMAIL }}"
+  #         git config --global user.name "${{ secrets.ACTION_USER }}"
+  #
+  #         # Configure Cargo to use git CLI for authentication
+  #         if (-not (Test-Path ~/.cargo)) { New-Item -ItemType Directory -Force -Path ~/.cargo }
+  #         @"
+  #         [net]
+  #         git-fetch-with-cli = true
+  #         "@ | Out-File -FilePath ~/.cargo/config.toml -Encoding utf8
+  #
+  #         # Test Git authentication
+  #         Write-Host "Testing Git authentication..."
+  #         try { git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD } catch { Write-Host "Warning: Could not access private repository" }
+  #       shell: pwsh
+  #
+  #     - name: Install Rust
+  #       run: |
+  #         rustup set profile minimal
+  #         rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
+  #         rustup default nightly-2025-06-20
+  #         rustup override set nightly-2025-06-20
+  #
+  #     - name: Install zigbuild
+  #       run: cargo install cargo-zigbuild
+  #
+  #     - name: Build release
+  #       run: |
+  #         pwsh ./build/build-host-release.ps1 "full winservice"
+  #
+  #     - name: Upload Github Assets
+  #       uses: softprops/action-gh-release@v2
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         files: build/release/*
+  #         prerelease: ${{ contains(needs.detect-release.outputs.tag, '-') }}
+  #         tag_name: ${{ needs.detect-release.outputs.tag }}
+  #         draft: false
+  #         fail_on_unmatched_files: true
+  #         generate_release_notes: true
