@@ -4,10 +4,9 @@
 
 ## [CyborgAI](https://github.com/cyborg-ai-git) (https://github.com/cyborg-ai-git)
 
-
 ---
 
-# EVO CyborgAI CLI
+# EVO CyborgAI_cli
 
 ---
 
@@ -29,7 +28,7 @@
 
 ## What This App Does
 
-EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust and the EVO Framework. It provides:
+EVO CyborgAI_cli is a modern terminal-based AI chat interface built with Rust and the EVO Framework. It provides:
 
 - **Interactive AI Chat Interface** with persistent conversation history
 - **Multi-Panel Layout** featuring Chat, File Explorer, Git operations, Settings, and Help panels
@@ -41,9 +40,11 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 - **File Explorer** for project navigation
 
 ---
-## 🎥 Demo Video
 
-[![CyborgAI CLI Demo](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
+## 🎥 Demo Video
+[![CyborgAI_cli Demo](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
+
+[![CyborgAI_cli](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
 
 *Click the image above to watch the demo video on YouTube*
 
@@ -62,6 +63,7 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
     - **Help**: Keyboard shortcuts and usage guide
 
 ---
+
 ## 📊 Development Progress
 
 | Feature                                            | Progress |
@@ -76,8 +78,6 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 | **Help**: Keyboard shortcuts and usage guide       | 63%      |
 
 ---
-
-
 
 ## Installation
 
@@ -306,12 +306,14 @@ Our release process uses a pull request workflow for better control and review:
 Use our automated scripts for streamlined contributions:
 
 ```bash
+
 # Create a new issue and feature branch
+# type: [bug|feature|doc|performance]
 ./scripts/run_issue_create.sh type "Title" "Detailed description"
 
 #examples:
-# Create a bug report
-#./scripts/run_issue_create.sh issue "Fix ai agent tab" "Users can not ..."
+# Create a bug issue
+#./scripts/run_issue_create.sh bug "Fix ai agent tab" "Users can not ..."
 
 # Create a feature request  
 #./scripts/run_issue_create.sh feature "Add dark mode" "Implement dark theme support for better user experience ..."
@@ -365,10 +367,9 @@ This repository includes comprehensive GitHub templates and community standards 
 ---
 
 ## Links
-- [YouTube Demo](https://www.youtube.com/watch?v=OnZAlOs09p4)
 - [CyborgAI Website](https://cyborgai.fly.dev)
-- [GitHub Organization](https://github.com/cyborg-ai-git)
--
+- [YouTube](https://www.youtube.com/watch?v=OnZAlOs09p4)
+- [GitHub](https://github.com/cyborg-ai-git)
 ---
 ## Future Development
 
