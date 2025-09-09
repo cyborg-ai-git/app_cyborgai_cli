@@ -136,6 +136,7 @@ jobs:
           rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
           rustup default nightly-2025-06-20
           rustup override set nightly-2025-06-20
+         
 
       - name: Install Zig
         run: |
@@ -161,7 +162,7 @@ jobs:
 
           # Always use nightly since we're using nightly-2025-06-20
           compile_nightly="-n"
-
+          rustup target add ${{ matrix.platform.target }}
           .github/workflows/build/build-release -t ${{ matrix.platform.target }} $compile_features $compile_nightly
 
       - name: List build artifacts
