@@ -162,7 +162,7 @@ jobs:
           # Always use nightly since we're using nightly-2025-06-20
           compile_nightly="-n"
 
-          ./build/build-release -t ${{ matrix.platform.target }} $compile_features $compile_nightly
+          .github/workflows/build/build-release -t ${{ matrix.platform.target }} $compile_features $compile_nightly
 
       - name: List build artifacts
         run: |
@@ -231,7 +231,7 @@ jobs:
       - name: Build release
         shell: bash
         run: |
-          ./build/build-host-release -t ${{ matrix.target }}
+          .github/workflows/build//build-host-release -t ${{ matrix.target }}
 
       - name: Upload Github Assets
         uses: softprops/action-gh-release@v2
