@@ -4,18 +4,15 @@
 
 ## [CyborgAI](https://github.com/cyborg-ai-git) (https://github.com/cyborg-ai-git)
 
-
 ---
 
-# EVO CyborgAI CLI
+# EVO CyborgAI_cli
 
 ---
 
 > ⚠️ **BETA DISCLAIMER**: CyborgAI CLI is currently in beta version. Use at your own risk. Features may be unstable and subject to change without notice. This software is provided "as is" without warranty of any kind.
 
-#### CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International          
-
----
+> #### CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International          
 
 ---
 
@@ -31,16 +28,39 @@
 
 ## What This App Does
 
-EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust and the EVO Framework. It provides:
+EVO CyborgAI_cli is a modern terminal-based AI chat interface built with Rust and the EVO Framework. It provides:
 
 - **Interactive AI Chat Interface** with persistent conversation history
 - **Multi-Panel Layout** featuring Chat, File Explorer, Git operations, Settings, and Help panels
 - **Full Mouse Support** with click navigation, scrolling, and modern UI interactions📖 
-- **Cross-Platform Compatibility** for macOS and Linux (Windows users can use WSL)
+- **Cross-Platform Compatibility** for macOS, Linux, and Windows
 - **Session Management** with automatic saving and restoration
 - **Built-in Help System** with comprehensive keyboard shortcuts
 - **Git and Github Integration** for repository management
 - **File Explorer** for project navigation
+
+---
+
+## 🎥 Demo Video
+[![CyborgAI_cli Demo](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
+
+[![CyborgAI_cli](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
+
+*Click the image above to watch the demo video on YouTube*
+
+---
+
+## Usage
+1. **Navigation**:
+    - Use mouse clicks to switch between panels
+    - Use keyboard shortcuts (press `?` for help)
+    - Type messages in chat and press Enter to send
+2. **Panels**:
+    - **Chat**: AI conversation interface
+    - **File**: File explorer for project navigation
+    - **Git**: Git repository operations
+    - **Settings**: Application configuration
+    - **Help**: Keyboard shortcuts and usage guide
 
 ---
 
@@ -59,29 +79,15 @@ EVO CyborgAI CLI is a modern terminal-based AI chat interface built with Rust an
 
 ---
 
-## 🎥 Demo Video
-
-[![CyborgAI CLI Demo](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
-
-*Click the image above to watch the demo video on YouTube*
-
----
-
 ## Installation
 
 ### Prerequisites
-
-> ⚠️ **Windows Users**: Native Windows builds are currently not available. Windows users should use **Windows Subsystem for Linux (WSL)** to run CyborgAI CLI. 
-> 
-> **Install WSL**: https://ubuntu.com/desktop/wsl
-> 
-> After installing WSL, follow the Linux installation instructions below.
 
 #### Install Rust
 Rust is required to build and run the application. See detailed installation instructions:
 📖 **[Install Rust Guide](install_rust.md)**
 
-#### Install rust + audit for linux and macOS for windows use 
+#### Install rust + audit for linux and macOS for windows use [Wsl](https://ubuntu.com/desktop/wsl)
 ```bash
 # Or using the development script
 chmod +x scripts/install.sh
@@ -97,40 +103,28 @@ chmod +x scripts/install.sh
 
 ---
 
-## Additional Requirements
 
-| Tool                | Description                                                           | Documentation                                        |
-|---------------------|-----------------------------------------------------------------------|------------------------------------------------------|
-| **GitHub CLI (gh)** | Required for repository and issue management scripts                  | 📖 **[Install GitHub CLI Guide](install_gh.md)**     |
-| **Git Flow**        | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
-| **PlantUML**        | Required for diagram generation in `run_documentation.sh`             | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
-| **Pandoc**          | Required for document export to PDF, DOC, ODT formats                 | 📖 **[Install Pandoc Guide](install_pandoc.md)**     |
+| Tool                | Description                                               | Documentation                                        |
+|---------------------|-----------------------------------------------------------|------------------------------------------------------|
+| **GitHub CLI (gh)** | Required for repository and issue management scripts      | 📖 **[Install GitHub CLI Guide](install_gh.md)**     |
+| **Git Flow**        | Used for organized development workflow                   | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
+| **PlantUML**        | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
+| **Pandoc**          | Required for document export to PDF, DOC, ODT formats     | 📖 **[Install Pandoc Guide](install_pandoc.md)**     |
 
 **Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
 
 ---
 
-## Future Development
+## Additional Requirements
 
-We are actively working on **CyborgAI Dev** - a comprehensive Rust application that will provide a complete development environment and eliminate the need for external dependencies like PlantUML and Pandoc. This next-generation tool will handle the entire development process from project creation to deployment.
+| Tool | Description | Documentation |
+|------|-------------|---------------|
+| **GitHub CLI (gh)** | Required for repository and issue management scripts | 📖 **[Install GitHub CLI Guide](install_gh.md)** |
+| **Git Flow** | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
+| **PlantUML** | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
+| **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](install_pandoc.md)** |
 
-🚀 **Stay tuned for updates**: [CyborgAI Dev Repository](https://github.com/cyborg-ai-git/app_cyborgai_dev)
-
-The new application will include:
-
-### 🤖 AI-Powered Automation
-- **Automatic Documentation Generation**: Full detailed documentation created automatically with AI support and UML diagrams
-- **Automatic Test Generation**: Comprehensive test suites generated automatically based on code analysis
-- **Automatic Benchmark Generation**: Performance benchmarks created automatically for optimization insights
-- **AI-Supported API Generation**: API generated automatically with AI assistance
-- **AI-Supported Entity Generation**: Entities created automatically
-
-### 🛠️ Enhanced Development Tools
-- **Integrated Documentation Generation**: Built-in tools for creating and maintaining project documentation
-- **Built-in Diagram Creation**: Native UML and architectural diagram generation without external dependencies
-- **Native Document Export**: Export capabilities to PDF, DOC, ODT formats without requiring Pandoc
-- **Enhanced Project Management**: Advanced project scaffolding, dependency management, and workflow automation
-- **Streamlined Development Workflows**: Optimized Git Flow integration with intelligent branch management and automated CI/CD pipelines
+**Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
 
 ---
 
@@ -255,20 +249,6 @@ The `scripts/` folder contains automation scripts for development workflow:
 
 ---
 
-## Usage
-1. **Navigation**: 
-   - Use mouse clicks to switch between panels
-   - Use keyboard shortcuts (press `?` for help)
-   - Type messages in chat and press Enter to send
-2. **Panels**:
-   - **Chat**: AI conversation interface
-   - **File**: File explorer for project navigation
-   - **Git**: Git repository operations
-   - **Settings**: Application configuration
-   - **Help**: Keyboard shortcuts and usage guide
-
----
-
 ## Development Workflow
 
 This repository uses **Git Flow** branching strategy for organized development:
@@ -279,17 +259,32 @@ This repository uses **Git Flow** branching strategy for organized development:
 - **`feature/*`**: Feature development branches (e.g., `feature/issue_123_new_feature`)
 - **`release/*`**: Release preparation branches (e.g., `release/v1.2.0`)
 
-> **Note on Hotfix Branches**: We do not use `hotfix/*` branches in our CyborgAI standard workflow. All code must be fully tested and verified before deployment. We believe that good code takes time, and proper testing through the standard feature → develop → release → master flow ensures quality and stability.
+**Note on Hotfix Branches**: We do not use `hotfix/*` branches in our CyborgAI standard workflow. All code must be fully tested and verified before deployment. We believe that good code takes time, and proper testing through the standard feature → develop → release → master flow ensures quality and stability.
 
 ---
 
-## Release Process
+### Release Process
 Our release process uses a pull request workflow for better control and review:
 
-1. **Supported Platforms**: Automatic builds for:
-   - **Linux**: x86_64-unknown-linux-gnu, x86_64-unknown-linux-musl
-   - **macOS**: x86_64-apple-darwin, aarch64-apple-darwin (Apple Silicon)
-   - **Windows**: Not currently supported natively (use WSL instead)
+1. **Create Release PR**: Run `./scripts_release/run_git_push_release.sh "Release description" release`
+   - Creates a tag on the develop branch
+   - Opens a pull request from develop to master
+   - Includes detailed release information
+
+2. **Review & Approve**: Team reviews the pull request for:
+   - Code quality and completeness
+   - Version number accuracy
+   - Release notes and documentation
+
+3. **Automated Build**: When the PR is merged to master:
+   - GitHub Actions automatically detects the release tag
+   - Builds cross-platform binaries (Linux, macOS, Windows ([Wsl](https://ubuntu.com/desktop/wsl)))
+   - Creates a GitHub release with all binaries attached
+
+4. **Supported Platforms**: Automatic builds for:
+   - **Linux**: x86_64, ARM variants, MIPS variants (musl and gnu)
+   - **Windows**: x86_64
+   - **macOS**: x86_64 and ARM64 (Apple Silicon)
 
 ---
 
@@ -311,13 +306,14 @@ Our release process uses a pull request workflow for better control and review:
 Use our automated scripts for streamlined contributions:
 
 ```bash
+
 # Create a new issue and feature branch
-# type: [issue|feature|doc|performance]
-./scripts/run_issue_create.sh type "title" "detailed description"
+# type: [bug|feature|doc|performance]
+./scripts/run_issue_create.sh type "Title" "Detailed description"
 
 #examples:
-# Create a bug report
-#./scripts/run_issue_create.sh issue "Fix ai agent tab" "Users can not ..."
+# Create a bug issue
+#./scripts/run_issue_create.sh bug "Fix ai agent tab" "Users can not ..."
 
 # Create a feature request  
 #./scripts/run_issue_create.sh feature "Add dark mode" "Implement dark theme support for better user experience ..."
@@ -334,6 +330,8 @@ Use our automated scripts for streamlined contributions:
 # Finish your work and create a pull request
 ./scripts/run_issue_finish.sh 123
 ```
+---
+
 ### 📋 GitHub Templates & Community Standards
 
 This repository includes comprehensive GitHub templates and community standards located in the `.github/` directory:
@@ -360,7 +358,7 @@ This repository includes comprehensive GitHub templates and community standards 
 
 ## Documentation
 **[EVO Framework Documentation](https://github.com/cyborg-ai-git/doc_evo.git)**
-**[CyborgAI cli Documentation](documentation/doc/cyborgai_cli/index.html)**
+**[CyborgAI_cli Documentation](documentation/doc/cyborgai_cli/index.html)**
 ---
 
 ## License
@@ -369,8 +367,30 @@ This repository includes comprehensive GitHub templates and community standards 
 ---
 
 ## Links
-- [YouTube Demo](https://www.youtube.com/watch?v=OnZAlOs09p4)
 - [CyborgAI Website](https://cyborgai.fly.dev)
-- [GitHub Organization](https://github.com/cyborg-ai-git)
--
+- [YouTube](https://www.youtube.com/watch?v=OnZAlOs09p4)
+- [GitHub](https://github.com/cyborg-ai-git)
+---
+## Future Development
+
+We are actively working on **CyborgAI Dev** - a comprehensive Rust application that will provide a complete development environment and eliminate the need for external dependencies like PlantUML and Pandoc. This next-generation tool will handle the entire development process from project creation to deployment.
+
+🚀 **Stay tuned for updates**: [CyborgAI Dev Repository](https://github.com/cyborg-ai-git/app_cyborgai_dev)
+
+The new application will include:
+
+### 🤖 AI-Powered Automation
+- **Automatic Documentation Generation**: Full detailed documentation created automatically with AI support and UML diagrams
+- **Automatic Test Generation**: Comprehensive test suites generated automatically based on code analysis
+- **Automatic Benchmark Generation**: Performance benchmarks created automatically for optimization insights
+- **AI-Supported API Generation**: API generated automatically with AI assistance
+- **AI-Supported Entity Generation**: Entities created automatically
+
+### 🛠️ Enhanced Development Tools
+- **Integrated Documentation Generation**: Built-in tools for creating and maintaining project documentation
+- **Built-in Diagram Creation**: Native UML and architectural diagram generation without external dependencies
+- **Native Document Export**: Export capabilities to PDF, DOC, ODT formats without requiring Pandoc
+- **Enhanced Project Management**: Advanced project scaffolding, dependency management, and workflow automation
+- **Streamlined Development Workflows**: Optimized Git Flow integration with intelligent branch management and automated CI/CD pipelines
+
 ---
