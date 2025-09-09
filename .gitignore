@@ -1,5 +1,5 @@
 target
-*/config.toml
+scripts_release
 *.assets*
 *.so
 *.onnx
@@ -8,6 +8,3 @@ target
 *.vs_code
 *.secret
 Cargo.lock
-*run_publish.sh
-*run_create_github_repository.sh
-*run_git_push_release.sh

@@ -40,7 +40,7 @@ ISSUE_DESCRIPTION="$3"
 
 # Validate issue type and set template path
 case "$ISSUE_TYPE" in
-    "issue")
+    "bug")
         TEMPLATE_PATH=".github/ISSUE_TEMPLATE/bug_report.md"
         ;;
     "feature")
