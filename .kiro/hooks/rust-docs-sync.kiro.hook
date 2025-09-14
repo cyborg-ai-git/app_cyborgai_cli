@@ -1,0 +1,26 @@
+{
+  "enabled": true,
+  "name": "Rust Documentation Sync",
+  "description": "Monitors Rust source files, configuration files, and scripts for changes and automatically updates project documentation in README.md and the documentation folder",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "app_cyborgai_cli/src/**/*.rs",
+      "app_cyborgai_cli/benches/**/*.rs",
+      "app_cyborgai_cli/tests/**/*.rs",
+      "Cargo.toml",
+      "app_cyborgai_cli/Cargo.toml",
+      "rust-toolchain.toml",
+      "rustfmt.toml",
+      ".rustfmt.toml",
+      "clippy.toml",
+      "scripts/**/*.sh",
+      "scripts_release/**/*.sh"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Source files have been modified in this Rust project. Please review the changes and update the documentation accordingly. Update the README.md file to reflect any new features, API changes, or usage instructions. Also update any relevant documentation in the documentation/ folder to keep it synchronized with the current codebase. Focus on maintaining accuracy between the code and its documentation."
+  }
+}

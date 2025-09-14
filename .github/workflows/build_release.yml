@@ -99,6 +99,9 @@ jobs:
     needs: detect-release
     if: needs.detect-release.outputs.should_release == 'true'
     runs-on: ubuntu-latest
+    container:
+      image: rust:1.82-bookworm
+      options: --user root
     env:
       RUST_BACKTRACE: full
     strategy:
@@ -109,11 +112,19 @@ jobs:
           - target: x86_64-unknown-linux-musl
 
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-
-      - name: Install LLVM and Clang
-        run: sudo apt install -y clang
+      - name: Install system dependencies
+        run: |
+          apt-get update
+          apt-get install -y \
+            git \
+            clang \
+            llvm \
+            build-essential \
+            pkg-config \
+            libssl-dev \
+            wget \
+            xz-utils \
+            musl-tools
 
       - uses: actions/checkout@v4
         with:
@@ -130,19 +141,17 @@ jobs:
           echo "Testing Git authentication..."
           git ls-remote https://github.com/cyborg-ai-git/evo_core_app_cli.git HEAD || echo "Warning: Could not access private repository"
 
-      - name: Install Rust
+      - name: Install Rust nightly toolchain
         run: |
-          rustup set profile minimal
           rustup toolchain install nightly-2025-06-20 --component rustc,rust-std,cargo,clippy,rustfmt
           rustup default nightly-2025-06-20
           rustup override set nightly-2025-06-20
-         
 
       - name: Install Zig
         run: |
           wget -q https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz
           tar -xf zig-linux-x86_64-0.13.0.tar.xz
-          sudo mv zig-linux-x86_64-0.13.0 /opt/zig
+          mv zig-linux-x86_64-0.13.0 /opt/zig
           echo "/opt/zig" >> $GITHUB_PATH
 
       - name: Install zigbuild
