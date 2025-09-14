@@ -183,7 +183,7 @@ chmod +x scripts/run.sh
 
 ```
 app_cyborgai_cli/
-├── app_cyborgai_cli/              # Main CLI application
+├── app_cyborgai_cli/             # Main CLI application
 │   ├── src/
 │   │   └── main.rs               # Application entry point
 │   ├── benches/                  # Performance benchmarks
@@ -209,13 +209,13 @@ app_cyborgai_cli/
 │   ├── run_publish.sh           # Publish to crates.io
 │   └── run_tests.sh             # Run test suite
 ├── documentation/               # Generated documentation
-│   ├── data/                   # Documentation assets
-│   │   └── logo_evo.svg       # Project logo
-│   └── doc/                   # Generated Rust docs
-├── Cargo.toml                  # Workspace configuration
-├── LICENSE.txt                 # License file
-├── .gitignore                 # Git ignore rules
-└── README.md                  # This file
+│   ├── data/                    # Documentation assets
+│   │   └── logo_evo.svg         # Project logo
+│   └── doc/                     # Generated Rust docs
+├── Cargo.toml                   # Workspace configuration
+├── LICENSE.txt                  # License file
+├── .gitignore                   # Git ignore rules
+└── README.md                    # This file
 ```
 
 ---
