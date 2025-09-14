@@ -60,7 +60,7 @@ documentation/
 ## Naming Conventions
 - **Binary Name**: `cyborgai_cli`
 - **Package Name**: `app_cyborgai_cli`
-- **Version Format**: `YYYY.M.DDHHMM` (e.g., "2025.9.71750")
+- **Version Format**: `YYYY.M.DD` (e.g., "2025.9.14")
 - **Branch Prefixes**: `feature/`, `release/` (no `hotfix/` branches used)
 - **Issue Branches**: `feature/issue_123_description_format`
 

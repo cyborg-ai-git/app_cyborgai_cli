@@ -46,7 +46,11 @@ The licensing strategy serves multiple purposes:
 > 
 > [evo_core_app_cli](https://github.com/cyborg-ai-git/evo_core_app_cli.git) -> min level: **7 (Trinity)**
 
-> #### If your peer ID is not allowed to access it, use the latest precompiled binary instead. [Releases]( https://github.com/cyborg-ai-git/app_cyborgai_cli/releases/)
+> #### If your peer ID is not allowed to access dependencies , use the latest precompiled binary instead: 
+> #### [Releases]( https://github.com/cyborg-ai-git/app_cyborgai_cli/releases/)
+
+> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eHIwNPikysW4j0eMJ8mhDdng4mkBVd08?usp=sharing)
+> #### [Colab CyborgAI_cli](https://colab.research.google.com/drive/1eHIwNPikysW4j0eMJ8mhDdng4mkBVd08?usp=sharing)  
 
 ---
 
@@ -383,7 +387,11 @@ This repository includes comprehensive GitHub templates and community standards 
 
 ## Documentation
 **[EVO Framework Documentation](https://github.com/cyborg-ai-git/doc_evo_framework_ai)**
+
 **[CyborgAI_cli Documentation](documentation/doc/cyborgai_cli/index.html)**
+
+**[CyborgAI_Dao](https://github.com/cyborg-ai-git/doc_whitepaper.git)**
+
 ---
 
 ## License
