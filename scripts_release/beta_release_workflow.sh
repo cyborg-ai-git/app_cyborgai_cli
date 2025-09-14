@@ -52,7 +52,8 @@ git add .
 git commit -m "Prepare release $RELEASE_VERSION" || echo "No changes to commit"
 git push origin develop
 
-git flow
+git flow release start "$TEST_TAG"
+git flow release finish "$TEST_TAG"
 
 
 
