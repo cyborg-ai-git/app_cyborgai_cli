@@ -12,11 +12,35 @@
 
 > ⚠️ **BETA DISCLAIMER**: CyborgAI CLI is currently in beta version. Use at your own risk. Features may be unstable and subject to change without notice. This software is provided "as is" without warranty of any kind.
 
-> #### CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International          
+---
+
+## License
+
+### License Explanation
+The CyborgAI project begins with the most restrictive Creative Commons license (CC BY-NC-ND 4.0) to safeguard the community's work from unauthorized code use and exploitation. This license prohibits commercial use and derivative works without explicit permission, ensuring that early contributions remain protected and value accrues to legitimate participants.
+
+As development milestones are achieved and community contributions expand, the license restrictions will gradually reduce according to our progressive decentralization roadmap, ultimately making the code more accessible to everyone.
+
+### License Evolution Strategy
+
+The licensing strategy serves multiple purposes:
+
+* Protects initial intellectual property investment during high-risk development phases
+* Creates controlled commercialization paths that direct revenue back to contributors
+* Establishes clear boundaries for permissible usage during ecosystem growth
+* Provides a transparent pathway toward eventual open access when appropriate safeguards are in place
+* Discourages early forks that could fragment the community before critical mass is achieved
+
+### License Terms
+> #### CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
+> Attribution Required: All usage must credit CyborgAI and original contributors
+> Non-Commercial: Commercial usage requires explicit written permission
+> No Derivatives: Modified versions cannot be distributed without authorization
+> Community Protection: Ensures value flows back to legitimate ecosystem participants
 
 ---
 
->  ### [Dependencies](https://github.com/cyborg-ai-git/doc_whitepaper.git):
+### [Dependencies](https://github.com/cyborg-ai-git/doc_whitepaper.git):
 > 
 > [evo_framework](https://github.com/cyborg-ai-git/evo_framework.git) -> min level: **1 (Red pill)**
 > 
@@ -42,9 +66,8 @@ EVO CyborgAI_cli is a modern terminal-based AI chat interface built with Rust an
 ---
 
 ## 🎥 Demo Video
-[![CyborgAI_cli Demo](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
+[![CyborgAI_cli Demo](https://img.youtube.com/vi/s1UVb4v16U0/maxresdefault.jpg)](https://youtu.be/s1UVb4v16U0)
 
-[![CyborgAI_cli](https://img.youtube.com/vi/OnZAlOs09p4/maxresdefault.jpg)](https://www.youtube.com/watch?v=OnZAlOs09p4)
 
 *Click the image above to watch the demo video on YouTube*
 
