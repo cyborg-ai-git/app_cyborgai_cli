@@ -6,7 +6,7 @@
 
 ---
 
-# EVO CyborgAI_cli
+# CyborgAI_cli
 
 ---
 
@@ -120,19 +120,19 @@ chmod +x scripts/install.sh
 ---
 
 ##  Requirements
-| Tool              | Description              | Repository                                                 |
-|-------------------|--------------------------|------------------------------------------------------------|
-| **CyborgAI Peer** | App peer for Ai and api  | 📡 **https://github.com/cyborg-ai-git/doc_whitepaper.git** |
+| Tool              | Description              | Repository                                                    |
+|-------------------|--------------------------|---------------------------------------------------------------|
+| **CyborgAI Peer** | App peer for Ai and api  | 📡 **https://github.com/cyborg-ai-git/app_cyborgai_peer.git** |
 
 ---
 
 
 | Tool                | Description                                               | Documentation                                        |
 |---------------------|-----------------------------------------------------------|------------------------------------------------------|
-| **GitHub CLI (gh)** | Required for repository and issue management scripts      | 📖 **[Install GitHub CLI Guide](install_gh.md)**     |
-| **Git Flow**        | Used for organized development workflow                   | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
-| **PlantUML**        | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
-| **Pandoc**          | Required for document export to PDF, DOC, ODT formats     | 📖 **[Install Pandoc Guide](install_pandoc.md)**     |
+| **GitHub CLI (gh)** | Required for repository and issue management scripts      | 📖 **[Install GitHub CLI Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)**    |
+| **Git Flow**        | Used for organized development workflow                   | 📖 **[Install Git Flow Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
+| **PlantUML**        | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide]https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
+| **Pandoc**          | Required for document export to PDF, DOC, ODT formats     | 📖 **[Install Pandoc Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)**     |
 
 **Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
 
@@ -142,10 +142,10 @@ chmod +x scripts/install.sh
 
 | Tool | Description | Documentation |
 |------|-------------|---------------|
-| **GitHub CLI (gh)** | Required for repository and issue management scripts | 📖 **[Install GitHub CLI Guide](install_gh.md)** |
-| **Git Flow** | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](install_git_flow.md)** |
-| **PlantUML** | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](install_plantuml.md)** |
-| **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](install_pandoc.md)** |
+| **GitHub CLI (gh)** | Required for repository and issue management scripts | 📖 **[Install GitHub CLI Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
+| **Git Flow** | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
+| **PlantUML** | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
+| **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
 
 **Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
 
@@ -272,6 +272,7 @@ The `scripts/` folder contains automation scripts for development workflow:
 
 ---
 
+
 ## Development Workflow
 
 This repository uses **Git Flow** branching strategy for organized development:
@@ -310,7 +311,8 @@ Our release process uses a pull request workflow for better control and review:
    - **macOS**: x86_64 and ARM64 (Apple Silicon)
 
 ---
-
+> CyborgAI_cli uses [GitHub issues](https://github.com/cyborg-ai-git/app_cyborgai_cli/issues) as the system of record for new features and bug fixes and this plays a critical role in the release process.
+---
 ## How to Contribute
 
 ### 🚀 Quick Start for Contributors
@@ -369,7 +371,7 @@ This repository includes comprehensive GitHub templates and community standards 
 
 ### 📝 Contribution Guidelines
 
-- Follow the **[EVO Framework standard conventions](https://github.com/cyborg-ai-git/doc_evo.git)**
+- Follow the **[EVO Framework standard conventions](https://github.com/cyborg-ai-git/doc_evo_framework_ai)**
 - Maintain strict separation between Control and Gui layers
 - Document all
 - Include unit tests for new functionality
@@ -380,7 +382,7 @@ This repository includes comprehensive GitHub templates and community standards 
 ---
 
 ## Documentation
-**[EVO Framework Documentation](https://github.com/cyborg-ai-git/doc_evo.git)**
+**[EVO Framework Documentation](https://github.com/cyborg-ai-git/doc_evo_framework_ai)**
 **[CyborgAI_cli Documentation](documentation/doc/cyborgai_cli/index.html)**
 ---
 

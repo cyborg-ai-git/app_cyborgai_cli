@@ -3,8 +3,9 @@
 # CyborgAI - Test Release Workflow
 # CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
 #===================================================================================================
-
-echo "🧪 Testing Release Workflow..."
+git config http.postBuffer 524288000
+git fetch --all
+echo "🧪 Release Workflow Beta..."
 
 # Check if GitHub CLI is available
 if ! command -v gh &> /dev/null; then
@@ -27,11 +28,33 @@ if [ -f "Cargo.toml" ]; then
         echo "❌ Could not read version from Cargo.toml"
         exit 1
     fi
-    TEST_TAG="v$VERSION-test"
+    TEST_TAG="v$VERSION-beta"
 else
     echo "❌ Cargo.toml not found"
     exit 1
 fi
+
+
+CURRENT_BRANCH=$(git branch --show-current)
+echo "🔵 Current branch: $CURRENT_BRANCH"
+
+# If not on develop, switch to develop
+if [ "$CURRENT_BRANCH" != "develop" ]; then
+    echo "🔄 Switching to develop branch..."
+    git checkout develop
+    git pull --rebase origin develop
+else
+    git pull --rebase origin develop
+fi
+
+# Add and commit any pending changes to develop
+git add .
+git commit -m "Prepare release $RELEASE_VERSION" || echo "No changes to commit"
+git push origin develop
+
+git flow
+
+
 
 echo "📦 Testing with version: $VERSION"
 echo "🏷️ Test tag: $TEST_TAG"
