@@ -82,5 +82,9 @@ echo "   gh release delete $TEST_TAG --yes"
 echo "   git tag -d $TEST_TAG"
 echo "   git push origin --delete $TEST_TAG"
 
+git checkout develop
+git pull --rebase origin develop
+git status
+
 gh run list --limit 1 --workflow=build_release.yml
 gh run view --log-failed
