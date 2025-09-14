@@ -52,7 +52,8 @@ git add .
 git commit -m "Prepare release $RELEASE_VERSION" || echo "No changes to commit"
 git push origin develop
 
-git flow
+git flow release start "$TEST_TAG"
+git flow release finish "$TEST_TAG"
 
 
 
@@ -80,6 +81,10 @@ echo "🧹 Cleanup: Delete the test release and tag when done:"
 echo "   gh release delete $TEST_TAG --yes"
 echo "   git tag -d $TEST_TAG"
 echo "   git push origin --delete $TEST_TAG"
+
+git checkout develop
+git pull --rebase origin develop
+git status
 
 gh run list --limit 1 --workflow=build_release.yml
 gh run view --log-failed
