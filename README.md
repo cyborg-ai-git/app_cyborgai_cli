@@ -40,7 +40,8 @@ The licensing strategy serves multiple purposes:
 
 ---
 
-### [Dependencies](https://github.com/cyborg-ai-git/doc_whitepaper.git):
+### Dependencies:
+> **[Levels doc](https://github.com/cyborg-ai-git/doc_whitepaper.git)**
 > 
 > [evo_framework](https://github.com/cyborg-ai-git/evo_framework.git) -> min level: **1 (Red pill)**
 > 
