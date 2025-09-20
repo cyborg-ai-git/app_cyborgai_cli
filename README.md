@@ -46,7 +46,11 @@ The licensing strategy serves multiple purposes:
 > 
 > [evo_core_app_cli](https://github.com/cyborg-ai-git/evo_core_app_cli.git) -> min level: **7 (Trinity)**
 
-> #### If your peer ID is not allowed to access it, use the latest precompiled binary instead. [Releases]( https://github.com/cyborg-ai-git/app_cyborgai_cli/releases/)
+> #### If your peer ID is not allowed to access dependencies , use the latest precompiled binary instead: 
+> #### [Releases]( https://github.com/cyborg-ai-git/app_cyborgai_cli/releases/)
+
+> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eHIwNPikysW4j0eMJ8mhDdng4mkBVd08?usp=sharing)
+> #### [Colab CyborgAI_cli](https://colab.research.google.com/drive/1eHIwNPikysW4j0eMJ8mhDdng4mkBVd08?usp=sharing)  
 
 ---
 
@@ -179,7 +183,7 @@ chmod +x scripts/run.sh
 
 ```
 app_cyborgai_cli/
-├── app_cyborgai_cli/              # Main CLI application
+├── app_cyborgai_cli/             # Main CLI application
 │   ├── src/
 │   │   └── main.rs               # Application entry point
 │   ├── benches/                  # Performance benchmarks
@@ -189,6 +193,10 @@ app_cyborgai_cli/
 │   └── Cargo.toml               # Package configuration
 ├── scripts/                     # Development and automation scripts
 │   ├── install.sh               # Install rust + audit 
+│   ├── issue_create.sh          # Create GitHub issues with branches
+│   ├── issue_finish.sh          # Finish issues with PRs
+│   ├── issue_list.sh            # List GitHub issues
+│   ├── issue_start.sh           # Start working on issues
 │   ├── run.sh                   # Run application in release mode
 │   ├── run_dev.sh               # Run application in development mode
 │   ├── run_benches.sh           # Run performance benchmarks
@@ -198,20 +206,16 @@ app_cyborgai_cli/
 │   ├── run_documentation.sh     # Generate documentation
 │   ├── run_format_code.sh       # Format and lint code
 │   ├── run_git_push.sh          # Git Flow operations and releases
-│   ├── run_issue_create.sh      # Create GitHub issues with branches
-│   ├── run_issue_finish.sh      # Finish issues with PRs
-│   ├── run_issue_list.sh        # List GitHub issues
-│   ├── run_issue_start.sh       # Start working on issues
 │   ├── run_publish.sh           # Publish to crates.io
 │   └── run_tests.sh             # Run test suite
 ├── documentation/               # Generated documentation
-│   ├── data/                   # Documentation assets
-│   │   └── logo_evo.svg       # Project logo
-│   └── doc/                   # Generated Rust docs
-├── Cargo.toml                  # Workspace configuration
-├── LICENSE.txt                 # License file
-├── .gitignore                 # Git ignore rules
-└── README.md                  # This file
+│   ├── data/                    # Documentation assets
+│   │   └── logo_evo.svg         # Project logo
+│   └── doc/                     # Generated Rust docs
+├── Cargo.toml                   # Workspace configuration
+├── LICENSE.txt                  # License file
+├── .gitignore                   # Git ignore rules
+└── README.md                    # This file
 ```
 
 ---
@@ -245,22 +249,22 @@ The `scripts/` folder contains automation scripts for development workflow:
   - Creates GitHub releases with proper tagging
 
 ### Issue Management (GitHub Integration)
-- **`run_issue_create.sh`**: 
+- **`issue_create.sh`**: 
   - Creates GitHub issues and corresponding Git Flow feature branches
-  - Usage: `./run_issue_create.sh "issue title" "description"`
+  - Usage: `./issue_create.sh "issue title" "description"`
   - Automatically generates sanitized branch names like `feature/issue_123_fix_bug`
 
-- **`run_issue_start.sh`**: 
+- **`issue_start.sh`**: 
   - Starts work on existing GitHub issues by creating feature branches
-  - Usage: `./run_issue_start.sh issue_number`
+  - Usage: `./issue_start.sh issue_number`
   - Checks out existing remote branches if they exist
 
-- **`run_issue_finish.sh`**: 
+- **`issue_finish.sh`**: 
   - Completes issue workflow by creating pull requests and closing issues
   - Merges feature branches back to develop using Git Flow
   - Automatically closes GitHub issues when PRs are created
 
-- **`run_issue_list.sh`**: Lists all GitHub issues using `gh issue list`
+- **`issue_list.sh`**: Lists all GitHub issues using `gh issue list`
 
 ### Documentation & Publishing
 - **`run_documentation.sh`**: 
@@ -334,26 +338,26 @@ Use our automated scripts for streamlined contributions:
 
 # Create a new issue and feature branch
 # type: [bug|feature|doc|performance]
-./scripts/run_issue_create.sh type "Title" "Detailed description"
+./scripts/issue_create.sh type "Title" "Detailed description"
 
 #examples:
 # Create a bug issue
-#./scripts/run_issue_create.sh bug "Fix ai agent tab" "Users can not ..."
+#./scripts/issue_create.sh bug "Fix ai agent tab" "Users can not ..."
 
 # Create a feature request  
-#./scripts/run_issue_create.sh feature "Add dark mode" "Implement dark theme support for better user experience ..."
+#./scripts/issue_create.sh feature "Add dark mode" "Implement dark theme support for better user experience ..."
 
 # Create a documentation issue
-#./scripts/run_issue_create.sh doc "Update API docs" "The agent tab section needs doc ..."
+#./scripts/issue_create.sh doc "Update API docs" "The agent tab section needs doc ..."
 
 # Create a performance issue
-#./scripts/run_issue_create.sh performance "Slow ..." "Application takes...."
+#./scripts/issue_create.sh performance "Slow ..." "Application takes...."
 
 # Start working on an existing issue
-./scripts/run_issue_start.sh 123
+./scripts/issue_start.sh 123
 
 # Finish your work and create a pull request
-./scripts/run_issue_finish.sh 123
+./scripts/issue_finish.sh 123
 ```
 ---
 
@@ -383,7 +387,11 @@ This repository includes comprehensive GitHub templates and community standards 
 
 ## Documentation
 **[EVO Framework Documentation](https://github.com/cyborg-ai-git/doc_evo_framework_ai)**
+
 **[CyborgAI_cli Documentation](documentation/doc/cyborgai_cli/index.html)**
+
+**[CyborgAI_Dao](https://github.com/cyborg-ai-git/doc_whitepaper.git)**
+
 ---
 
 ## License

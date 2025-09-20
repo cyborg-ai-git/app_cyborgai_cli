@@ -22,17 +22,17 @@ cargo audit
 cargo fmt
 cargo clippy
 
-echo "build -target x86_64-unknown-linux-gnu"
+#echo "build -target x86_64-unknown-linux-gnu"
 #time cross build --target x86_64-unknown-linux-musl --release
-time cargo zigbuild --target x86_64-unknown-linux-gnu --release
+#time cargo zigbuild --target x86_64-unknown-linux-gnu --release
 
 echo "build -target x86_64-unknown-linux-musl"
 #time cross build --target x86_64-unknown-linux-musl --release
 time cargo zigbuild --target x86_64-unknown-linux-musl --release
 
-echo "build -target x86_64-apple-darwin"
-time cargo zigbuild --target x86_64-apple-darwin --release
-time cargo zigbuild --target aarch64-apple-darwin --release
+#echo "build -target x86_64-apple-darwin"
+#time cargo zigbuild --target x86_64-apple-darwin --release
+#time cargo zigbuild --target aarch64-apple-darwin --release
 #===================================================================================================
 cd "$CURRENT_DIRECTORY" || exit
 #===================================================================================================

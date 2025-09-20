@@ -12,7 +12,7 @@
 //!
 //! ## cyborgai_app_cli
 //!
-//! ### v20258261141
+//! ### v2025914
 //!
 //! {_DOC_}
 #![cfg_attr(
@@ -27,7 +27,7 @@ use evo_core_app_cli::CAppMain;
 use evo_framework::{IControl, IError};
 //==================================================================================================
 /// Version of the app
-pub const EVO_VERSION: u64 = 20258261141;
+pub const EVO_VERSION: u64 = 2025914;
 //--------------------------------------------------------------------------------------------------
 #[tokio::main(flavor = "multi_thread")]
 /// main function
