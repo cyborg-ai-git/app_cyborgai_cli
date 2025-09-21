@@ -235,21 +235,7 @@ echo ""
 echo "💡 Next steps:"
 echo "   1. Wait for PR approval and merge"
 echo "   2. After PR is merged, the remote feature branch will be deleted"
-
-CURRENT_BRANCH=$(git branch --show-current)
-echo "🔵 Current branch: $CURRENT_BRANCH"
-
-# If not on develop, switch to develop
-if [ "$CURRENT_BRANCH" != "develop" ]; then
-    echo "🔄 Switching to develop branch..."
-    git checkout develop
-    git pull --rebase origin develop
-else
-    git pull --rebase origin develop
-fi
-
-git log -1
-git status
+echo "   3. You can then switch to develop and pul"
 #---------------------------------------------------------------------------------------------------
 cd "$CURRENT_DIRECTORY" || exit
 #===================================================================================================

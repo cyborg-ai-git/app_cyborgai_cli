@@ -30,7 +30,7 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
     echo "❌ Error: Issue type, title, and description are required"
     echo "Usage: $0 <type> 'issue_title' 'issue_description'"
     echo ""
-    echo "Valid types: issue, feature, doc, performance"
+    echo "Valid types: doc, feature"
     exit 1
 fi
 
@@ -40,17 +40,11 @@ ISSUE_DESCRIPTION="$3"
 
 # Validate issue type and set template path
 case "$ISSUE_TYPE" in
-    "bug")
-        TEMPLATE_PATH=".github/ISSUE_TEMPLATE/bug_report.md"
-        ;;
     "feature")
         TEMPLATE_PATH=".github/ISSUE_TEMPLATE/feature_request.md"
         ;;
     "doc")
         TEMPLATE_PATH=".github/ISSUE_TEMPLATE/documentation.md"
-        ;;
-    "performance")
-        TEMPLATE_PATH=".github/ISSUE_TEMPLATE/performance.md"
         ;;
     *)
         echo "❌ Error: Invalid issue type '$ISSUE_TYPE'"

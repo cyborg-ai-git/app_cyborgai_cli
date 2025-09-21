@@ -54,6 +54,9 @@ The licensing strategy serves multiple purposes:
 > #### [Colab CyborgAI_cli](https://colab.research.google.com/drive/1eHIwNPikysW4j0eMJ8mhDdng4mkBVd08?usp=sharing)  
 
 ---
+> #### ⚠ For use **CyborgAI_cli** start at least one [CyborgAI_peer ](https://github.com/cyborg-ai-git/app_cyborgai_peer)
+
+---
 
 ## What This App Does
 
@@ -98,7 +101,7 @@ EVO CyborgAI_cli is a modern terminal-based AI chat interface built with Rust an
 |----------------------------------------------------|----------|
 | **Chat Tab**: AI conversation interface            | 60%      |
 | **Agent Edit Tab**                                 | 58%      |
-| **Memory Tab**                                     | 42%      |
+| **Memory Tab**  (mocap)                            | 42%      |
 | **Peer Tab**                                       | 82%      |
 | **File Tab**: File explorer for project navigation | 74%      |
 | **Git Tab**: Git repository operations             | 73%      |
@@ -115,10 +118,10 @@ EVO CyborgAI_cli is a modern terminal-based AI chat interface built with Rust an
 Rust is required to build and run the application. See detailed installation instructions:
 📖 **[Install Rust Guide](install_rust.md)**
 
-#### Install rust + audit for linux and macOS for windows use [Wsl](https://ubuntu.com/desktop/wsl)
+#### Install rust + audit for linux and macOS for windows (for now) use [Wsl](https://ubuntu.com/desktop/wsl)
 ```bash
 # Or using the development script
-chmod +x scripts/install.sh
+chmod +x ./scripts/install.sh
 ./scripts/install.sh
 ```
 
@@ -131,13 +134,10 @@ chmod +x scripts/install.sh
 
 ---
 
-
 | Tool                | Description                                               | Documentation                                        |
 |---------------------|-----------------------------------------------------------|------------------------------------------------------|
 | **GitHub CLI (gh)** | Required for repository and issue management scripts      | 📖 **[Install GitHub CLI Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)**    |
 | **Git Flow**        | Used for organized development workflow                   | 📖 **[Install Git Flow Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
-| **PlantUML**        | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide]https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
-| **Pandoc**          | Required for document export to PDF, DOC, ODT formats     | 📖 **[Install Pandoc Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)**     |
 
 **Note**: We are actively working on eliminating these external dependencies in the upcoming **CyborgAI Dev** application.
 
@@ -147,8 +147,6 @@ chmod +x scripts/install.sh
 
 | Tool | Description | Documentation |
 |------|-------------|---------------|
-| **GitHub CLI (gh)** | Required for repository and issue management scripts | 📖 **[Install GitHub CLI Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
-| **Git Flow** | Used for organized development workflow with feature/release branches | 📖 **[Install Git Flow Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
 | **PlantUML** | Required for diagram generation in `run_documentation.sh` | 📖 **[Install PlantUML Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
 | **Pandoc** | Required for document export to PDF, DOC, ODT formats | 📖 **[Install Pandoc Guide](https://github.com/cyborg-ai-git/doc_evo_framework_ai)** |
 
@@ -184,7 +182,7 @@ chmod +x scripts/run.sh
 
 ```
 app_cyborgai_cli/
-├── app_cyborgai_cli/             # Main CLI application
+├── app_cyborgai_cli/            # Main CLI application
 │   ├── src/
 │   │   └── main.rs               # Application entry point
 │   ├── benches/                  # Performance benchmarks
@@ -194,10 +192,11 @@ app_cyborgai_cli/
 │   └── Cargo.toml               # Package configuration
 ├── scripts/                     # Development and automation scripts
 │   ├── install.sh               # Install rust + audit 
-│   ├── issue_create.sh          # Create GitHub issues with branches
-│   ├── issue_finish.sh          # Finish issues with PRs
+│   ├── 0_issue_create.sh        # Create GitHub issues with branches
+│   ├── 1_issue_start.sh         # Start working on issues
+│   ├── 2_issue_commit.sh        # Commit changes
+│   ├── 3_issue_finish.sh        # Finish issues with PRs
 │   ├── issue_list.sh            # List GitHub issues
-│   ├── issue_start.sh           # Start working on issues
 │   ├── run.sh                   # Run application in release mode
 │   ├── run_dev.sh               # Run application in development mode
 │   ├── run_benches.sh           # Run performance benchmarks
@@ -232,48 +231,39 @@ The `scripts/` folder contains automation scripts for development workflow:
 - **`run_cargo_clean.sh`**: Cleans all build artifacts and target directories
 - **`run_cargo_update.sh`**: Updates all Cargo dependencies to their latest compatible versions
 - **`run_format_code.sh`**: Formats code  and runs linting
-- **`run_benches.sh`**: Runs performance benchmarks 
+- **`run_benches.sh`**: Runs performance benchmarks
 - **`run_tests.sh`**: Executes the full test suite with info-level debugging
 
-### Git Flow & Repository Management
-- **`run_create_github_repository.sh`**: 
-  - Creates a private GitHub repository using GitHub CLI (`gh`)
-  - Initializes Git Flow with `master` (production) and `develop` (integration) branches
-  - Sets up feature/, release/, and hotfix/ branch prefixes
-  - Pushes initial commit and establishes remote tracking
-
-- **`run_git_push.sh`**: 
-  - Handles Git Flow operations for commits and releases
-  - Usage: `./run_git_push.sh "commit message"` for regular commits
-  - Usage: `./run_git_push.sh "commit message" release` for Git Flow releases
-  - Automatically reads version from Cargo.toml for release tagging
-  - Creates GitHub releases with proper tagging
 
 ### Issue Management (GitHub Integration)
-- **`issue_create.sh`**: 
-  - Creates GitHub issues and corresponding Git Flow feature branches
-  - Usage: `./issue_create.sh "issue title" "description"`
-  - Automatically generates sanitized branch names like `feature/issue_123_fix_bug`
+- **`0_issue_create.sh`**:
+    - Creates GitHub issues and corresponding Git Flow feature branches
+    - Usage: `./scripts/0_issue_create.sh "issue title" "description"`
+    - Automatically generates sanitized branch names like `feature/issue_123_fix_bug`
 
-- **`issue_start.sh`**: 
-  - Starts work on existing GitHub issues by creating feature branches
-  - Usage: `./issue_start.sh issue_number`
-  - Checks out existing remote branches if they exist
+- **`1_issue_start.sh`**:
+    - Starts work on existing GitHub issues by creating feature branches
+    - Usage: `./scripts/1_issue_start.sh issue_number`
+    - Checks out existing remote branches if they exist
 
-- **`issue_finish.sh`**: 
-  - Completes issue workflow by creating pull requests and closing issues
-  - Merges feature branches back to develop using Git Flow
-  - Automatically closes GitHub issues when PRs are created
+- **`2_issue_commit.sh`**:
+    - Commit all changes (git add .)
+    - Usage: `./scripts/2_issue_commit.sh "Commit description"`
+    - Checks out existing remote branches if they exist
 
-- **`issue_list.sh`**: Lists all GitHub issues using `gh issue list`
+- **`3_issue_finish.sh`**:
+    - Completes issue workflow by creating pull requests and closing issues
+    - Usage: `./scripts/3_issue_fimish.sh issue_number`
+    - Merges feature branches back to develop using Git Flow
+    - Automatically closes GitHub issues when PRs are created
+
+- **`issue_list.sh`**: Lists all GitHub issues
 
 ### Documentation & Publishing
-- **`run_documentation.sh`**: 
-  - Generates PlantUML diagrams from `.puml` files in `documentation/data/`
-  - Creates Rust documentation using `cargo doc --no-deps --open`
-  - Copies generated docs to `documentation/doc/` for version control
-
-- **`run_publish.sh`**: Publishes the crate to crates.io using `cargo publish`
+- **`run_documentation.sh`**:
+    - Generates PlantUML diagrams from `.puml` files in `documentation/data/`
+    - Creates Rust documentation
+    - Copies generated docs to `documentation/doc/` for version control
 
 ---
 
@@ -291,42 +281,18 @@ This repository uses **Git Flow** branching strategy for organized development:
 **Note on Hotfix Branches**: We do not use `hotfix/*` branches in our CyborgAI standard workflow. All code must be fully tested and verified before deployment. We believe that good code takes time, and proper testing through the standard feature → develop → release → master flow ensures quality and stability.
 
 ---
-
-### Release Process
-Our release process uses a pull request workflow for better control and review:
-
-1. **Create Release PR**: Run `./scripts_release/run_git_push_release.sh "Release description" release`
-   - Creates a tag on the develop branch
-   - Opens a pull request from develop to master
-   - Includes detailed release information
-
-2. **Review & Approve**: Team reviews the pull request for:
-   - Code quality and completeness
-   - Version number accuracy
-   - Release notes and documentation
-
-3. **Automated Build**: When the PR is merged to master:
-   - GitHub Actions automatically detects the release tag
-   - Builds cross-platform binaries (Linux, macOS, Windows ([Wsl](https://ubuntu.com/desktop/wsl)))
-   - Creates a GitHub release with all binaries attached
-
-4. **Supported Platforms**: Automatic builds for:
-   - **Linux**: x86_64, ARM variants, MIPS variants (musl and gnu)
-   - **Windows**: x86_64
-   - **macOS**: x86_64 and ARM64 (Apple Silicon)
-
----
-> CyborgAI_cli uses [GitHub issues](https://github.com/cyborg-ai-git/app_cyborgai_cli/issues) as the system of record for new features and bug fixes and this plays a critical role in the release process.
+> cyborgai_cli uses [GitHub issues](https://github.com/cyborg-ai-git/app_cyborgai_cli/issues) as the system of record for new features and bug fixes and this plays a critical role in the release process.
 ---
 ## How to Contribute
 
 ### 🚀 Quick Start for Contributors
 
 1. **Fork the Repository**: Create your own fork of the project
-2. **Create an Issue**: Use our automated script to create issues and Git Flow feature branches:
-3. **Start Feature Branch**: Use Git Flow to start working on the issue:
-4. **Follow EVO Framework**: Adhere to naming conventions and architecture patterns
-5. **Write Tests**: Include appropriate test coverage
+2. **Install all tools**: ./scripts/run_install.sh
+3. **Create an Issue**: Use our automated script to create issues and Git Flow feature branches:
+4. **Start Feature Branch**: Use Git Flow to start working on the issue:
+5. **Follow EVO Framework**: Adhere to naming conventions and architecture patterns
+6. **Tests and benchmarks the code **: Include appropriate test coverage and benchmark performance
 6. **Submit Pull Request**: Use Git Flow to finish and target the `develop` branch:
 7. **Code Review**: Participate in the review process
 
@@ -339,28 +305,32 @@ Use our automated scripts for streamlined contributions:
 
 # Create a new issue and feature branch
 # type: [bug|feature|doc|performance]
-./scripts/issue_create.sh type "Title" "Detailed description"
+./scripts/0_issue_create.sh type "Title" "Detailed description"
 
 #examples:
 # Create a bug issue
-#./scripts/issue_create.sh bug "Fix ai agent tab" "Users can not ..."
+#./scripts/0_issue_create.sh bug "Fix ai agent tab" "Users can not ..."
 
 # Create a feature request  
-#./scripts/issue_create.sh feature "Add dark mode" "Implement dark theme support for better user experience ..."
+#./scripts/0_issue_create.sh feature "Add dark mode" "Implement dark theme support for better user experience ..."
 
 # Create a documentation issue
-#./scripts/issue_create.sh doc "Update API docs" "The agent tab section needs doc ..."
+#./scripts/0_issue_create.sh doc "Update API docs" "The agent tab section needs doc ..."
 
 # Create a performance issue
-#./scripts/issue_create.sh performance "Slow ..." "Application takes...."
+#./scripts/0_issue_create.sh performance "Slow ..." "Application takes...."
 
 # Start working on an existing issue
-./scripts/issue_start.sh 123
+./scripts/1_issue_start.sh 123
+
+# Commit and pull your changes 
+./scripts/2_issue_commit.sh "fixed: ..."
 
 # Finish your work and create a pull request
-./scripts/issue_finish.sh 123
+./scripts/3_issue_finish.sh 123
 ```
 ---
+
 
 ### 📋 GitHub Templates & Community Standards
 
