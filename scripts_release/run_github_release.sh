@@ -6,20 +6,24 @@
 #===================================================================================================
 PACKAGE_NAME="$(basename "$(pwd)")"
 DIRECTORY_BASE=$(dirname "$(realpath "$0")")
+CURRENT_TIME=$(date +"%Y.%-m.%-d%H%M")
+#===================================================================================================
 clear
-
+#---------------------------------------------------------------------------------------------------
 echo "Usage: $0 'release_message'"
 echo "  - Without 'release': commits to current branch"
 echo "  - With 'release': creates git flow release using Cargo.toml version"
-
-CURRENT_TIME=$(date +"%Y.%-m.%-d%H%M")
 #---------------------------------------------------------------------------------------------------
-echo "🟢 $CURRENT_TIME - RUN git flow $ $DIRECTORY_BASE"
+echo "🟢 $CURRENT_TIME - RUN githu release  $DIRECTORY_BASE"
 #---------------------------------------------------------------------------------------------------
 CURRENT_DIRECTORY=$(pwd)
 #---------------------------------------------------------------------------------------------------
 cd "$DIRECTORY_BASE" || exit
 cd ..
+#---------------------------------------------------------------------------------------------------
+bash ./scripts_release/run_build_release_local.sh
+#---------------------------------------------------------------------------------------------------
+pwd
 #---------------------------------------------------------------------------------------------------
 # Check if git repository exists
 if [ -d .git ]; then
@@ -48,14 +52,14 @@ if ! git config --get gitflow.branch.master >/dev/null 2>&1; then
     echo "🟢 Git flow initialized successfully!"
 fi
 
-# Set commit message
+# Set commit message (will be updated for releases after version is read)
 if [ -z "$1" ]; then
     comment="commit $CURRENT_TIME"
 else
     comment="$1"
 fi
 
-echo "💬 Commit message: $comment"
+echo "💬 Initial commit message: $comment"
 #---------------------------------------------------------------------------------------------------
 # Configure git and fetch updates
 git config http.postBuffer 524288000
@@ -71,10 +75,12 @@ if [ "release" = "release" ]; then
 
     # Read version from Cargo.toml
     if [ -f "Cargo.toml" ]; then
-        VERSION=$(grep -E '^version = ' Cargo.toml | head -1 | sed 's/version = "\(.*\)"/\1/' | tr -d '"')
+        # Try workspace.package version first
+        VERSION=$(grep -A 10 '\[workspace\.package\]' Cargo.toml | grep -E '^version = ' | head -1 | sed 's/version = "\(.*\)"/\1/' | tr -d '"')
+        
+        # If not found, try regular package version
         if [ -z "$VERSION" ]; then
-            # Try workspace.package version
-            VERSION=$(grep -A 10 '\[workspace\.package\]' Cargo.toml | grep -E '^version = ' | head -1 | sed 's/version = "\(.*\)"/\1/' | tr -d '"')
+            VERSION=$(grep -E '^version = ' Cargo.toml | head -1 | sed 's/version = "\(.*\)"/\1/' | tr -d '"')
         fi
 
         if [ -z "$VERSION" ]; then
@@ -83,7 +89,13 @@ if [ "release" = "release" ]; then
         fi
 
         echo "📦 Found version in Cargo.toml: $VERSION"
-        RELEASE_VERSION="v$VERSION"
+        RELEASE_VERSION="$VERSION"
+        
+        # Update commit message for release if not provided
+        if [ -z "$1" ]; then
+            comment="Release $RELEASE_VERSION"
+            echo "💬 Updated commit message for release: $comment"
+        fi
     else
         echo "❌ Cargo.toml not found"
         exit 1
@@ -116,6 +128,83 @@ if [ "release" = "release" ]; then
         echo "⚠️ Tag $RELEASE_VERSION already exists, using existing tag"
         # Force push the tag if it exists locally but might be different
         git push origin "$RELEASE_VERSION" || echo "Tag already exists on remote"
+    fi
+
+    # Create GitHub release with binaries from ./output directory
+    echo "🚀 Creating GitHub release with binaries..."
+    
+    # Check if output directory exists and has files
+    if [ -d "./output" ] && [ "$(ls -A ./output 2>/dev/null)" ]; then
+        echo "📦 Found binaries in ./output directory"
+        
+        # Create release with all binaries as attachments
+        RELEASE_NOTES="Release $RELEASE_VERSION
+
+## Built Artifacts
+This release includes pre-built binaries for multiple platforms.
+
+## Installation
+Download the appropriate binary for your platform from the assets below.
+
+Tag: $RELEASE_VERSION"
+
+        # Create the release and attach all files from output directory
+        if gh release create "$RELEASE_VERSION" \
+            --title "Release $RELEASE_VERSION" \
+            --notes "$RELEASE_NOTES" \
+            --target develop \
+            --prerelease \
+            ./output/*; then
+            
+            echo "✅ GitHub release created successfully with binaries!"
+            echo "🔗 Release URL: https://github.com/$(gh repo view --json owner,name --jq '.owner.login + "/" + .name')/releases/tag/$RELEASE_VERSION"
+        else
+            echo "❌ Failed to create GitHub release with binaries"
+            echo "ℹ️ Attempting to create release without binaries..."
+            
+            # Fallback: create release without binaries
+            if gh release create "$RELEASE_VERSION" \
+                --title "Release $RELEASE_VERSION" \
+                --notes "$RELEASE_NOTES" \
+                --target develop \
+                --prerelease; then
+                
+                echo "✅ GitHub release created (without binaries)"
+                
+                # Try to upload binaries separately
+                echo "📦 Attempting to upload binaries separately..."
+                for binary in ./output/*; do
+                    if [ -f "$binary" ]; then
+                        echo "⬆️ Uploading $(basename "$binary")..."
+                        gh release upload "$RELEASE_VERSION" "$binary" || echo "⚠️ Failed to upload $(basename "$binary")"
+                    fi
+                done
+            else
+                echo "❌ Failed to create GitHub release"
+                exit 1
+            fi
+        fi
+    else
+        echo "⚠️ No binaries found in ./output directory"
+        echo "ℹ️ Creating release without binary attachments..."
+        
+        # Create release without binaries
+        RELEASE_NOTES="Release $RELEASE_VERSION
+
+Tag: $RELEASE_VERSION"
+
+        if gh release create "$RELEASE_VERSION" \
+            --title "Release $RELEASE_VERSION" \
+            --notes "$RELEASE_NOTES" \
+            --target develop \
+            --prerelease; then
+            
+            echo "✅ GitHub release created successfully!"
+            echo "🔗 Release URL: https://github.com/$(gh repo view --json owner,name --jq '.owner.login + "/" + .name')/releases/tag/$RELEASE_VERSION"
+        else
+            echo "❌ Failed to create GitHub release"
+            exit 1
+        fi
     fi
 
     # Check if GitHub CLI is available
@@ -171,8 +260,7 @@ Release tag: \`$RELEASE_VERSION\`"
         --title "$PR_TITLE" \
         --body "$PR_BODY" \
         --base master \
-        --head develop \
-        --label "release"; then
+        --head develop; then
         
         echo "🟢 Pull request created successfully!"
         echo "📋 Next steps:"
