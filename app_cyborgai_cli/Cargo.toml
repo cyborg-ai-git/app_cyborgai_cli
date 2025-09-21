@@ -1,7 +1,7 @@
 #=======================================================================================================================
 # CyborgAI
 # CC BY-NC-ND 4.0 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
-# github: https:#github.com/cyborg-ai-git
+# github: https://github.com/cyborg-ai-git
 #=======================================================================================================================
 [package]
 name = "app_cyborgai_cli"
